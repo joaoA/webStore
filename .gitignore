@@ -1,17 +1,17 @@
 fotoStore/.settings/org.scala-ide.sdt.core.prefs
-project/project
-project/target
-logs
-target
-.history
-dist
-/.idea
-/*.iml
-/out
-/.idea_modules
-/.classpath
-/.project
-/RUNNING_PID
+fotoStore/project/project
+fotoStore/project/target
+fotoStore/logs
+fotoStore/target
+fotoStore/.history
+fotoStore/dist
+fotoStore/.idea
+fotoStore/*.iml
+fotoStore/out
+fotoStore/.idea_modules
+fotoStore/.classpath
+fotoStore/.project
+fotoStore//RUNNING_PID
 # Can ignore specific files
 .DS_Store
 
