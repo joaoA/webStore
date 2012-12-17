@@ -30,22 +30,26 @@ public class Application extends Controller {
 		render();
 	}
 
-	public static	void bolsaById(long id){
+	public static void bolsaById(long id){
 		List<Bolsa> bolsas = new ArrayList<Bolsa>();
 		Bolsa bolsa = new Bolsa();
 
 		String titulo = "bolsa muita fixe";
 		String preco="192€";
 		
+		
 		bolsa.titulo = "bolsa muita fixe";
 		bolsa.marca = "bolsasMark";
 		bolsa.dimExterior="10 x 20 x 40 mm";
 		bolsa.dimInterior="7 x 15 x 35 mm";
 		bolsa.preco = "192€";
+		bolsa.id=(long)0;
+		
+		String imagem = "/public/images/bolsas/id"+bolsa.id+".jpg";
 		
 		/****************************************/
 		bolsas.add(bolsa);
-		render(bolsas,titulo,preco);
+		render(bolsas,titulo,preco,imagem);
 	}
 	
 	public static void exampleBolsas() {
