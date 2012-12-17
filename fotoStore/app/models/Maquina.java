@@ -1,15 +1,18 @@
 package models;
 
+import javax.persistence.*;
+import play.db.jpa.Model;
+
 public class Maquina extends MaterialFoto{
 
-	private String bateria;
-	private String dimensao;
-	private String dimensaoEcra;
-	private String distFocal;
-	private String interf;
-	private String peso;
-	private String resolucao;
-	private String tipoMem;
+	public String bateria;
+	public String dimensao;
+	public String dimensaoEcra;
+	public String distFocal;
+	public String interf;
+	public String peso;
+	public String resolucao;
+	public String tipoMem;
 
 	public Maquina(){}
 

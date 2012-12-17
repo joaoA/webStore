@@ -1,0 +1,38 @@
+package controllers;
+
+import java.io.*;
+import play.*;
+import play.mvc.*;
+
+import java.util.*;
+import java.lang.*;
+import models.*;
+
+
+public class Application extends Controller {
+
+    public static void index() {
+        render();
+    }
+
+    public static void example() {
+        render();
+    }
+	
+	public static void exampleBolsas() {
+    
+		Bolsa bolsa = new Bolsa();
+
+		bolsa.titulo= "bolsa muita fixe";
+        bolsa.marca= "bolsasMark";
+        bolsa.preco= "192€";
+
+
+        List<Bolsa> bolsas = new ArrayList<Bolsa>();
+        bolsas.add(bolsa);
+
+        render(bolsas);
+    }
+
+
+}

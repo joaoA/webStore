@@ -1,8 +1,11 @@
 package models;
 
+import javax.persistence.*;
+import play.db.jpa.Model;
+
 public class MaquinaInfantil extends Maquina{
 
-	private String cor;
+	public String cor;
 
 	public MaquinaInfantil() {}
 

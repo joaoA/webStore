@@ -10,9 +10,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>.link1</name>
+			<name>.link0</name>
 			<type>2</type>
-			<location>/home/joao/ws/webStore/fotoStore/target/scala-2.9.1/classes_managed</location>
+			<location>/home/joao/play-1.2.5/framework/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>

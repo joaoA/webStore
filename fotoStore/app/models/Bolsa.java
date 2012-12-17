@@ -1,9 +1,12 @@
 package models;
 
+import javax.persistence.*;
+import play.db.jpa.Model;
+
 public class Bolsa extends MaterialFoto{
 
-	private String dimInterior;
-	private String dimExterior;
+	public String dimInterior;
+	public String dimExterior;
 
 	public Bolsa() {
 	}

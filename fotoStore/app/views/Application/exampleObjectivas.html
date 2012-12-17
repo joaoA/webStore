@@ -1,0 +1,97 @@
+#{extends 'main.html' /}
+#{set title:'FotoStore' /}
+
+    
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li style="color:#FFFFFF;">#{a @Application.index()}HOME#{/a}</li>
+              <li>#{a @Application.exampleBolsas()}Bolsas#{/a}</li>
+              <li>#{a @Application.exampleObjectivas()}Objectivas#{/a}</li>
+               <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Maquinas<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li>#{a @Application.exampleInfantis()}Infantis#{/a}</li>
+                  <li>#{a @Application.exampleAventura()}Aventura#{/a}</li>
+                  <li>#{a @Application.exampleReflex()}Reflex#{/a}</li>
+                  
+                </ul>
+              </li>
+              
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Sidebar</li>
+              <li class="active"><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li class="nav-header">Sidebar</li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li class="nav-header">Sidebar</li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
+          <div class="hero-unit" style = "height:335px">
+              <div class="span6">
+				<h3>Objectivas</h3>
+				<table >
+					<tbody>
+						#{list items:bolsas, as:'local'}				    
+						    <tr>
+						      <td style="border:1px solid black;"><img src="http://77.91.202.130/images/4012293185-Bolsa+CASE+LOGIC+para+maquina+fotografica+compacta.jpg" alt="Smiley face" height="42" width="42"></td	>
+						      <td style="border:1px solid black;">&{local.titulo}</td>
+						      <td style="border:1px solid black;">&{local.preco}</td>
+						    </tr>
+						#{/list}
+					</tbody>
+				</table>
+          </div>
+    
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>© Company 2012</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+

@@ -1,9 +1,12 @@
 package models;
 
+import javax.persistence.*;
+import play.db.jpa.Model;
+
 public class MaquinaAdulto extends Maquina {
 
-	private String formVideo;
-	private String fotoSeq;
+	public String formVideo;
+	public String fotoSeq;
 
 	public String getFormVideo() {
 		return formVideo;

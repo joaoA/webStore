@@ -1,11 +1,14 @@
 package models;
 
+import javax.persistence.*;
+import play.db.jpa.Model;
+
 public class MaquinaAventura extends MaquinaAdulto{
 
-	String zoom;
-	String abertura;
-	String iso;
-	String velocidade;
+	public String zoom;
+	public String abertura;
+	public String iso;
+	public String velocidade;
 
 	public MaquinaAventura() {}
 

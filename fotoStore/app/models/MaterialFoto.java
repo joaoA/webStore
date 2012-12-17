@@ -1,6 +1,9 @@
 package models;
 
-public class MaterialFoto {
+import javax.persistence.*;
+import play.db.jpa.Model;
+
+public class MaterialFoto extends Model {
 
 	public String titulo;
 	public String marca;

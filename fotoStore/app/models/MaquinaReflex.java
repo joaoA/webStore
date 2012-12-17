@@ -1,9 +1,12 @@
 package models;
 
+import javax.persistence.*;
+import play.db.jpa.Model;
+
 public class MaquinaReflex extends MaquinaAdulto{
 
-	private String objetiva;
-	private String nivelUser;
+	public String objetiva;
+	public String nivelUser;
 
 	public MaquinaReflex(){}
 
