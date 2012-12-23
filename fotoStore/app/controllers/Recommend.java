@@ -75,7 +75,7 @@ public class Recommend {
 	public List<MaterialFoto> recommendReflex(MaquinaReflex maq) {
 		List<MaterialFoto> materiais = new ArrayList<MaterialFoto>();
 		List<MaterialFoto> temp;
-		temp = search.search("Bolsas","all");
+		temp = search.search("Bolsas","all","");
 		for(MaterialFoto mat: temp) {
 			if(dimFit(((Bolsa)mat).getDimInterior(),maq.getDimensao()) && priceFit(mat.getPreco(),maq.getPreco(),2))
 				materiais.add(mat);
@@ -108,12 +108,12 @@ public class Recommend {
 	public List<MaterialFoto> recommendAventura(MaquinaAventura maq) {
 		List<MaterialFoto> materiais = new ArrayList<MaterialFoto>();
 		List<MaterialFoto> temp;
-		materiais.addAll(search.search("Aventura",maq.marca));
-		temp = search.search("Aventura","all");
+		materiais.addAll(search.search("Aventura","marca",maq.marca));
+		temp = search.search("Aventura","all","");
 
 		for(MaterialFoto mat: temp) {
 			if(priceFit(mat.getPreco(),maq.getPreco(),1))
-				materiais.add(e);
+				materiais.add(mat);
 		}
 
 		System.out.println(materiais.size());
@@ -125,13 +125,13 @@ public class Recommend {
 	public List<MaterialFoto> recommendBolsa(Bolsa bolsa) {
 		List<MaterialFoto> materiais = new ArrayList<MaterialFoto>();
 		List<MaterialFoto> temp;
-		temp = search.search("Bolsas","all");
+		temp = search.search("Bolsas","all","");
 		for(MaterialFoto mat: temp) {
 			if(priceFit(mat.getPreco(),bolsa.getPreco(),6))
 				materiais.add(mat);
 		}
-		temp = search.search("Reflex","all");
-		temp.addAll(search.search("Aventura", "all"));
+		temp = search.search("Reflex","all","");
+		temp.addAll(search.search("Aventura", "all",""));
 		for(MaterialFoto mat: temp) {
 			System.out.println(mat.getTitulo());
 			if(dimFit(((Maquina)mat).getDimensao(),bolsa.getDimInterior()) && priceFit(mat.getPreco(),bolsa.getPreco(),5))
@@ -146,7 +146,7 @@ public class Recommend {
 	public List<MaterialFoto> recommendInfantil(MaquinaInfantil infantil) {
 		List<MaterialFoto> materiais = new ArrayList<MaterialFoto>();
 		List<MaterialFoto> temp;
-		temp = search.search("Infatil","all");
+		temp = search.search("Infatil","all","");
 
 		for(MaterialFoto mat: temp) {
 			if(priceFit(mat.getPreco(),infantil.getPreco(),1))

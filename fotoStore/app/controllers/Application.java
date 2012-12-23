@@ -33,12 +33,7 @@ public class Application extends Controller {
 	}
 
 	public static void bolsaById(long id){
-		List<MaterialFoto> materiais = search.search("Bolsas",
-				"select ?element " +
-						"where {" +
-						"?element rdf:type xmlns:Bolsas . " +
-						"?element xmlns:Id \"" + id +"\"" +
-						"} ");
+		List<MaterialFoto> materiais = search.search("Bolsas","Id",""+id);
 
 		List<Bolsa> bolsas = new ArrayList<Bolsa>();
 		for(MaterialFoto mat: materiais) {
