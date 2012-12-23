@@ -12,6 +12,7 @@ fotoStore/.idea_modules
 fotoStore/.classpath
 fotoStore/.project
 fotoStore//RUNNING_PID
+.metadata/*
 # Can ignore specific files
 .DS_Store
 
