@@ -1,7 +1,7 @@
 #{extends 'main.html' /}
 #{set title:'FotoStore' /}
 
-    
+
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -20,7 +20,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          
+
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li style="color:#FFFFFF;">#{a @Application.index()}HOME#{/a}</li>
@@ -32,15 +32,22 @@
                   <li>#{a @Application.exampleInfantis()}Infantis#{/a}</li>
                   <li>#{a @Application.exampleAventura()}Aventura#{/a}</li>
                   <li>#{a @Application.exampleReflex()}Reflex#{/a}</li>
-                  
+
                 </ul>
               </li>
-              
+
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
+
+	<script type="text/javascript">
+
+	<!--
+	alert(&{cenas})
+	//-->
+	</script>
 
     <div class="container-fluid">
       <div class="row-fluid">
@@ -79,10 +86,10 @@
               <h5>Caracteristicas Especificas</h5>
               <hr/>
               <div class="span6">
-				
+
 				<table width="100%">
 					<tbody>
-						#{list items:bolsas, as:'bolsa'}				    
+						#{list items:bolsas, as:'bolsa'}
 						    <tr>
 						      <td style="border:1px solid black;" width="50%">Titulo</td>
 						      <td style="border:1px solid black;" width="50%">&{bolsa.titulo}</td>
@@ -103,7 +110,7 @@
 					</tbody>
 				</table>
           </div>
-    
+
         </div><!--/span-->
       </div><!--/row-->
 

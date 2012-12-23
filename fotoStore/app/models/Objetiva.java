@@ -5,12 +5,21 @@ import play.db.jpa.Model;
 
 public class Objetiva extends MaterialFoto{
 
-	public String abertura;
-	public String dimensoes;
-	public String peso;
-	public String tipo;
+	private String distFoc;
+	private String abertura;
+	private String dimensoes;
+	private String peso;
+	private String tipo;
 
 	public Objetiva() {}
+
+	public String getDistFoc() {
+		return distFoc;
+	}
+
+	public void setDistFoc(String distFoc) {
+		this.distFoc = distFoc;
+	}
 
 	public String getAbertura() {
 		return abertura;
@@ -44,4 +53,11 @@ public class Objetiva extends MaterialFoto{
 		this.tipo = tipo;
 	}
 
+	@Override
+	public String toString() {
+		return "Objetiva [distFoc=" + distFoc + ", abertura=" + abertura
+				+ ", dimensoes=" + dimensoes + ", peso=" + peso + ", tipo="
+				+ tipo + ", titulo=" + titulo + ", marca=" + marca + ", preco="
+				+ preco + "]";
+	}
 }

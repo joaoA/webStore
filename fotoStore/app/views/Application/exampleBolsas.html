@@ -1,7 +1,7 @@
 #{extends 'main.html' /}
 #{set title:'FotoStore' /}
 
-    
+
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -20,7 +20,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          
+
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li style="color:#FFFFFF;">#{a @Application.index()}HOME#{/a}</li>
@@ -32,15 +32,16 @@
                   <li>#{a @Application.exampleInfantis()}Infantis#{/a}</li>
                   <li>#{a @Application.exampleAventura()}Aventura#{/a}</li>
                   <li>#{a @Application.exampleReflex()}Reflex#{/a}</li>
-                  
+
                 </ul>
               </li>
-              
+
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
+
 
     <div class="container-fluid">
       <div class="row-fluid">
@@ -72,7 +73,7 @@
 				<h3>Bolsas</h3>
 				<table >
 					<tbody>
-						#{list items:bolsas, as:'bolsa'}				    
+						#{list items:bolsas, as:'bolsa'}
 						    <tr>
 						      <td style="border:1px solid black;"><img src="http://77.91.202.130/images/4012293185-Bolsa+CASE+LOGIC+para+maquina+fotografica+compacta.jpg" alt="Smiley face" height="42" width="42"></td>
 						      <td style="border:1px solid black;">#{a @Application.bolsaById(0)}&{bolsa.titulo}#{/a}</td>
@@ -82,7 +83,7 @@
 					</tbody>
 				</table>
           </div>
-    
+
         </div><!--/span-->
       </div><!--/row-->
 

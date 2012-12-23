@@ -10,6 +10,8 @@ import models.*;
 
 public class Application extends Controller {
 
+	private static Search search = new Search();
+
 	public static void index() {
 		render();
 	}
@@ -31,30 +33,42 @@ public class Application extends Controller {
 	}
 
 	public static void bolsaById(long id){
-		List<Bolsa> bolsas = new ArrayList<Bolsa>();
-		Bolsa bolsa = new Bolsa();
+		List<MaterialFoto> materiais = search.search("Bolsas",
+				"select ?element " +
+						"where {" +
+						"?element rdf:type xmlns:Bolsas . " +
+						"?element xmlns:Id \"" + id +"\"" +
+						"} ");
 
-		String titulo = "bolsa muita fixe";
-		String preco="192€";
-		
-		
-		bolsa.titulo = "bolsa muita fixe";
+		List<Bolsa> bolsas = new ArrayList<Bolsa>();
+		for(MaterialFoto mat: materiais) {
+			bolsas.add((Bolsa)mat);
+		}
+		String cenas = ""+bolsas.size();
+
+//		Bolsa bolsa = new Bolsa();
+
+		String titulo = bolsas.get(0).getTitulo();
+		String preco=bolsas.get(0).getPreco();
+
+/*		bolsa.titulo = "bolsa muita fixe";
 		bolsa.marca = "bolsasMark";
 		bolsa.dimExterior="10 x 20 x 40 mm";
 		bolsa.dimInterior="7 x 15 x 35 mm";
 		bolsa.preco = "192€";
 		bolsa.id=(long)0;
-		
-		String imagem = "/public/images/bolsas/id"+bolsa.id+".jpg";
-		
+*/
+		String imagem = "\\public\\images\\bolsas\\id"+id+".jpg";
+
+
 		/****************************************/
-		bolsas.add(bolsa);
-		render(bolsas,titulo,preco,imagem);
+//		bolsas.add(bolsa);
+		render(bolsas,titulo,preco,imagem,cenas);
 	}
-	
+
 	public static void exampleBolsas() {
-		List<Bolsa> bolsas = new ArrayList<Bolsa>();
-		Bolsa bolsa = new Bolsa();
+		List<Bolsa> bolsas = search.searchBolsa();
+/*		Bolsa bolsa = new Bolsa();
 
 		bolsa.titulo = "bolsa muita fixe";
 		bolsa.marca = "bolsasMark";
@@ -68,11 +82,11 @@ public class Application extends Controller {
 		bolsa2.preco = "50€";
 		bolsa.id = (long) 1;
 
-		/****************************************/
+		*//****************************************//*
 
 		bolsas.add(bolsa);
 		bolsas.add(bolsa2);
-
+*/
 		render(bolsas);
 	}
 

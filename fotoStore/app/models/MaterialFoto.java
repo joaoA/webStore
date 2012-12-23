@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+
 import play.db.jpa.Model;
 
 public class MaterialFoto extends Model {
