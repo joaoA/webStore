@@ -30,5 +30,16 @@ public class MaterialFoto extends Model {
 	public void setPreco(String preco) {
 		this.preco = preco;
 	}
+	public String getImagem() {
+		return imagem;
+	}
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 
 }
