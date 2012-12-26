@@ -9,6 +9,8 @@ public class MaterialFoto extends Model {
 	public String titulo;
 	public String marca;
 	public String preco;
+    public String imagem;
+    public int id;
 
 	public String getTitulo() {
 		return titulo;

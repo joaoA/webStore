@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.*;
 import play.*;
+import play.data.binding.As;
 import play.mvc.*;
 
 import java.util.*;
@@ -32,19 +33,14 @@ public class Application extends Controller {
 		render();
 	}
 
-	public static void bolsaById(long id){
-		List<MaterialFoto> materiais = search.search("Bolsas",
-				"select ?element " +
-						"where {" +
-						"?element rdf:type xmlns:Bolsas . " +
-						"?element xmlns:Id \"" + id +"\"" +
-						"} ");
+	public static void bolsaById(int id){
+
+		List<MaterialFoto> materiais = search.search("Bolsas","Id",""+id);
 
 		List<Bolsa> bolsas = new ArrayList<Bolsa>();
 		for(MaterialFoto mat: materiais) {
 			bolsas.add((Bolsa)mat);
 		}
-		String cenas = ""+bolsas.size();
 
 //		Bolsa bolsa = new Bolsa();
 
@@ -63,30 +59,21 @@ public class Application extends Controller {
 
 		/****************************************/
 //		bolsas.add(bolsa);
-		render(bolsas,titulo,preco,imagem,cenas);
+		render(bolsas,titulo,preco,imagem);
 	}
 
 	public static void exampleBolsas() {
 		List<Bolsa> bolsas = search.searchBolsa();
-/*		Bolsa bolsa = new Bolsa();
 
-		bolsa.titulo = "bolsa muita fixe";
-		bolsa.marca = "bolsasMark";
-		bolsa.preco = "192€";
-		bolsa.id = (long) 0;
+        int i=0;
+        for(Bolsa b:bolsas){
+            b.imagem="\\public\\images\\bolsas\\id"+i+".jpg";
+            b.id=i;
+            i++;
+        }
 
-		Bolsa bolsa2 = new Bolsa();
 
-		bolsa2.titulo = "bolsa2";
-		bolsa2.marca = "bolsasMark";
-		bolsa2.preco = "50€";
-		bolsa.id = (long) 1;
-
-		*//****************************************//*
-
-		bolsas.add(bolsa);
-		bolsas.add(bolsa2);
-*/
+        //ValuePaginator paginator = new ValuePaginator(bolsas);
 		render(bolsas);
 	}
 

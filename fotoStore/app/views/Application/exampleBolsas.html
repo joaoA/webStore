@@ -75,8 +75,8 @@
 					<tbody>
 						#{list items:bolsas, as:'bolsa'}
 						    <tr>
-						      <td style="border:1px solid black;"><img src="http://77.91.202.130/images/4012293185-Bolsa+CASE+LOGIC+para+maquina+fotografica+compacta.jpg" alt="Smiley face" height="42" width="42"></td>
-						      <td style="border:1px solid black;">#{a @Application.bolsaById(0)}&{bolsa.titulo}#{/a}</td>
+						      <td style="border:1px solid black;"><img src=&{bolsa.imagem} alt="Smiley face" height="42" width="42"></td>
+						      <td style="border:1px solid black;">#{a @Application.bolsaById(bolsa.id)}&{bolsa.titulo}#{/a}</td>
 						      <td style="border:1px solid black;">&{bolsa.preco}</td>
 						    </tr>
 						#{/list}
@@ -96,3 +96,4 @@
     </div><!--/.fluid-container-->
 
 
+</div>

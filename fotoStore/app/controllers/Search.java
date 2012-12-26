@@ -28,7 +28,7 @@ public class Search {
 
 	final String NS = "http://www.owl-ontologies.com/maquinas.owl#";
 
-	public List<MaterialFoto> search(String type, String marca) {
+	public List<MaterialFoto> search(String type, String scope, String value) {
 
 		String directory = "database";
 		Dataset dataset = TDBFactory.createDataset(directory);
@@ -37,19 +37,28 @@ public class Search {
 		PropertiesTDB props = new PropertiesTDB(tdb, NS);
 
 		String q;
-		if(marca.equals("all")) {
+		if(scope.equals("all")) {
 			q =  "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
 					"PREFIX xmlns: <http://www.owl-ontologies.com/maquinas.owl#> " +
 					"select ?element " +
 					"where {?element rdf:type xmlns:" + type + "} ";
+		}
+		else if(scope.equals("marca")) {
+			q = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
+					"PREFIX xmlns: <http://www.owl-ontologies.com/maquinas.owl#> " +
+					"select ?element " +
+							"where {" +
+							"?element rdf:type xmlns:" + type + " . " +
+							"?element xmlns:Marca \"" + value + "\"" +
+							"} ";
 		}
 		else {
 			q = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
 					"PREFIX xmlns: <http://www.owl-ontologies.com/maquinas.owl#> " +
 					"select ?element " +
 							"where {" +
-							"?element rdf:type xmlns:Aventura . " +
-							"?element xmlns:Marca \"" + marca + "\"" +
+							"?element rdf:type xmlns:" + type + " . " +
+							"?element xmlns:Id \"" + value + "\"" +
 							"} ";
 		}
 
@@ -126,7 +135,7 @@ public class Search {
 
 	public List<MaquinaAventura> searchAventura() {
 		List<MaquinaAventura> aventura = new ArrayList<MaquinaAventura>();
-		List<MaterialFoto> lista = search("Aventura","all");
+		List<MaterialFoto> lista = search("Aventura","all","");
 		for (MaterialFoto m: lista) {
 			aventura.add((MaquinaAventura)m);
 		}
@@ -135,7 +144,7 @@ public class Search {
 
 	public List<MaquinaReflex> searchReflex() {
 		List<MaquinaReflex> reflex = new ArrayList<MaquinaReflex>();
-		List<MaterialFoto> lista = search("Reflex","all");
+		List<MaterialFoto> lista = search("Reflex","all","");
 		for (MaterialFoto m: lista) {
 			reflex.add((MaquinaReflex)m);
 		}
@@ -144,7 +153,7 @@ public class Search {
 
 	public List<MaquinaInfantil> searchInfantil() {
 		List<MaquinaInfantil> infantil = new ArrayList<MaquinaInfantil>();
-		List<MaterialFoto> lista = search("Infatil","all");
+		List<MaterialFoto> lista = search("Infatil","all","");
 		for (MaterialFoto m: lista) {
 			infantil.add((MaquinaInfantil)m);
 		}
@@ -153,7 +162,7 @@ public class Search {
 
 	public List<Objetiva> searchObjetiva() {
 		List<Objetiva> objetiva = new ArrayList<Objetiva>();
-		List<MaterialFoto> lista = search("Objetiva","all");
+		List<MaterialFoto> lista = search("Objetiva","all","");
 		for (MaterialFoto m: lista) {
 			objetiva.add((Objetiva)m);
 		}
@@ -162,7 +171,7 @@ public class Search {
 
 	public List<Bolsa> searchBolsa() {
 		List<Bolsa> bolsa = new ArrayList<Bolsa>();
-		List<MaterialFoto> lista = search("Bolsas","all");
+		List<MaterialFoto> lista = search("Bolsas","all","");
 		for (MaterialFoto m: lista) {
 			bolsa.add((Bolsa)m);
 		}

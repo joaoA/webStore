@@ -42,12 +42,7 @@
       </div>
     </div>
 
-	<script type="text/javascript">
 
-	<!--
-	alert(&{cenas})
-	//-->
-	</script>
 
     <div class="container-fluid">
       <div class="row-fluid">
@@ -78,7 +73,8 @@
               <div><table>
               <tr>
               <td><img class="img-polaroid" src=&{imagem} height="100px" width="100px"/></td>
-              <td><h3>&{titulo}&nbsp;&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp;&{preco} </h3></td>
+              <td><h3>&{titulo}<br/><h5>&nbsp;&nbsp;&{preco} €</h5></h3>
+
               </tr>
               </table>
               </div>
@@ -87,24 +83,24 @@
               <hr/>
               <div class="span6">
 
-				<table width="100%">
+				<table width="700px">
 					<tbody>
 						#{list items:bolsas, as:'bolsa'}
 						    <tr>
-						      <td style="border:1px solid black;" width="50%">Titulo</td>
-						      <td style="border:1px solid black;" width="50%">&{bolsa.titulo}</td>
+						      <td style="border:1px solid black;" width="200px">Titulo</td>
+						      <td style="border:1px solid black;" width="500px">&{bolsa.titulo}</td>
 						    </tr>
 						    <tr>
-						      <td style="border:1px solid black;" width="50%">Marca</td>
-						      <td style="border:1px solid black;" width="50%">&{bolsa.marca}</td>
+						      <td style="border:1px solid black;" width="200px">Marca</td>
+						      <td style="border:1px solid black;" width="500px">&{bolsa.marca}</td>
 						    </tr>
 						    <tr>
-						      <td style="border:1px solid black;" width="50%">Dimensao Exterior</td>
-						      <td style="border:1px solid black;" width="50%">&{bolsa.dimExterior}</td>
+						      <td style="border:1px solid black;" width="200px">Dimensao Exterior</td>
+						      <td style="border:1px solid black;" width="500px">&{bolsa.dimExterior}</td>
 						    </tr>
 						    <tr>
-						      <td style="border:1px solid black;" width="50%">Dimensao Interior</td>
-						      <td style="border:1px solid black;" width="50%">&{bolsa.dimInterior}</td>
+						      <td style="border:1px solid black;" width="200px">Dimensao Interior</td>
+						      <td style="border:1px solid black;" width="500px">&{bolsa.dimInterior}</td>
 						    </tr>
 						#{/list}
 					</tbody>
@@ -117,14 +113,16 @@
         	<hr>
         	<table width="100%">
 					<tbody>
+                    <tr>
 						#{list items:bolsas, as:'bolsa'}				    
-						    <tr>
-						      <td style="border:1px solid black;" width="50%">IMAGEM</td>
-						      <td style="border:1px solid black;" width="50%">&{bolsa.titulo}</td>
-						      <td style="border:1px solid black;" width="50%">&{bolsa.preco}</td>
-						    </tr>
+						       <table width="33%">
+                                   <tr><td style="border:1px solid black;" width="33%">IMAGEM</td></tr>
+                                   <tr><td style="border:1px solid black;" width="33%">&{bolsa.titulo}</td></tr>
+                                   <tr><td style="border:1px solid black;" width="33%">&{bolsa.preco}</td></tr>
+                               </table>
 						    
 						#{/list}
+                    </tr>
 					</tbody>
 				</table>
         </div>
