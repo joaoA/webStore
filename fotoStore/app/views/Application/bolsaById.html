@@ -114,13 +114,15 @@
         	<table width="100%">
 					<tbody>
                     <tr>
-						#{list items:bolsas, as:'bolsa'}				    
-						       <table width="33%">
-                                   <tr><td style="border:1px solid black;" width="33%">IMAGEM</td></tr>
-                                   <tr><td style="border:1px solid black;" width="33%">&{bolsa.titulo}</td></tr>
-                                   <tr><td style="border:1px solid black;" width="33%">&{bolsa.preco}</td></tr>
+
+						#{list items:recomendacao, as:'rec'}
+                        <td width="200px">
+						       <table>
+                                   <tr height="100px"><td width="300px" style="border:1px solid black;"><center><img height="100px" width="100px" src=&{rec.imagem}></center></td></tr>
+                                   <tr height="65px"><td width="300px" style="border:1px solid black;">&{rec.titulo}</td></tr>
+                                   <tr height="65px"><td width="300px" style="border:1px solid black;">&{rec.preco} €</td></tr>
                                </table>
-						    
+                            </td>
 						#{/list}
                     </tr>
 					</tbody>

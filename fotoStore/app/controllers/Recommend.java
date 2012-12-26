@@ -39,7 +39,7 @@ public class Recommend {
 			max = Double.parseDouble(preco2.replace(",", ".")) * 12;
 		}
 		else if(option == 6) { //bolsa to bolsa
-			min = Double.parseDouble(preco2.replace(",", ".")) * 0.8;
+			min = Double.parseDouble(preco2.replace(",", ".")) * 0.3;
 			max = Double.parseDouble(preco2.replace(",", ".")) * 1.2;
 		}
 		else { //obj to obj
@@ -52,12 +52,12 @@ public class Recommend {
 	}
 
 	private boolean dimFit(String dimBolsa, String dimMaq) {
-		return volume(dimBolsa.substring(1, dimBolsa.length() -1)) > volume(dimMaq);
+		return volume(dimBolsa.substring(1, dimBolsa.length() -1)) >= volume(dimMaq);
 	}
 
 	private double volume(String dim) {
 
-		System.out.println("dim = " + dim);
+//		System.out.println("dim = " + dim);
 		double vol = 0;
 
 		String[] ar = dim.replace(",",".").split(" ");
@@ -133,12 +133,12 @@ public class Recommend {
 		temp = search.search("Reflex","all","");
 		temp.addAll(search.search("Aventura", "all",""));
 		for(MaterialFoto mat: temp) {
-			System.out.println(mat.getTitulo());
+//			System.out.println(mat.getTitulo());
 			if(dimFit(((Maquina)mat).getDimensao(),bolsa.getDimInterior()) && priceFit(mat.getPreco(),bolsa.getPreco(),5))
 				materiais.add(mat);
 		}
 
-		System.out.println(materiais.size());
+		System.out.println("\n\n\n"+materiais.size());
 
 		return materiais;
 	}

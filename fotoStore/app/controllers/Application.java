@@ -54,10 +54,27 @@ public class Application extends Controller {
 		/****************************************/
         /*         Recomendacao das bolsas      */
         /****************************************/
-//        List<MaterialFoto> recomendacao = recommend.recommendBolsa(bolsas.get(0));
+        List<MaterialFoto> recomendacao = recommend.recommendBolsa(bolsas.get(0));
 
+        // TODO:: tirar este PREGO!
+        Bolsa gandaPrego= new Bolsa();
+        gandaPrego.id=0;
+        gandaPrego.titulo="nada";
+        gandaPrego.preco="zero";
+        while(recomendacao.size()<4)
+            recomendacao.add(gandaPrego);
 
-		render(bolsas,titulo,preco,imagem);
+        recomendacao= recomendacao.subList(0,3);
+
+        for (MaterialFoto mat : recomendacao){
+            mat.imagem = "\\public\\images\\bolsas\\id"+mat.id+".jpg";
+            System.out.println(mat.titulo +"  "+mat.preco);
+        }
+
+    //TODO: para o caso das  bolsas mais caras, a recomendacao geral 1 bolsa,
+    //TODO : temos que meter isto a gerar mais algumas, nem que seja aleatorio...depois explicamos ao prof o pq
+
+		render(bolsas,titulo,preco,imagem,recomendacao);
 	}
 
 	public static void exampleBolsas() {
