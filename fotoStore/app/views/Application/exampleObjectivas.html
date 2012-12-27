@@ -72,11 +72,11 @@
 				<h3>Objectivas</h3>
 				<table width="650px">
 					<tbody>
-						#{list items:objetivas, as:'local'}
+						#{list items:objetivas, as:'obj'}
 						    <tr>
-						      <td style="border:1px solid black;" width="50px" heigth="50px"><center><img src=&{local.imagem} alt="Smiley face" ></center></td>
-						      <td style="border:1px solid black;" width="600px">&{local.titulo}</td>
-						      <td style="border:1px solid black;" width="100px"><center>&{local.preco} €</center></td>
+						      <td style="border:1px solid black;" width="50px" heigth="50px"><center><img src=&{obj.imagem} alt="Smiley face" ></center></td>
+						      <td style="border:1px solid black;" width="600px">&{obj.titulo}</td>
+						      <td style="border:1px solid black;" width="100px"><center>&{obj.preco} €</center></td>
 						    </tr>
 						#{/list}
 					</tbody>

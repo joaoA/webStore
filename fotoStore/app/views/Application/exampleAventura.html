@@ -70,13 +70,13 @@
           <div class="hero-unit" style = "height:335px">
               <div class="span6">
 				<h3>Maquinas Aventura</h3>
-				<table >
+				<table width="650px">
 					<tbody>
-						#{list items:bolsas, as:'local'}				    
+						#{list items:maqAv, as:'maq'}
 						    <tr>
-						      <td style="border:1px solid black;"><img src="http://77.91.202.130/images/4012293185-Bolsa+CASE+LOGIC+para+maquina+fotografica+compacta.jpg" alt="Smiley face" height="42" width="42"></td	>
-						      <td style="border:1px solid black;">&{local.titulo}</td>
-						      <td style="border:1px solid black;">&{local.preco}</td>
+						      <td style="border:1px solid black;" width="50px" heigth="50px"><center><img src=&{maq.imagem} alt="Smiley face" height="42" width="42"></center></td	>
+						      <td style="border:1px solid black;" width="600px">&{maq.titulo}</td>
+						      <td style="border:1px solid black;" width="100px"><center>&{maq.preco} €</center></td>
 						    </tr>
 						#{/list}
 					</tbody>
@@ -94,4 +94,5 @@
 
     </div><!--/.fluid-container-->
 
+</div>
 

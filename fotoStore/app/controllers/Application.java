@@ -32,15 +32,39 @@ public class Application extends Controller {
 	}
 
 	public static void exampleInfantis() {
-		render();
+        List<MaquinaInfantil> maqInf = search.searchInfantil();
+
+        int i=0;
+        for(MaquinaInfantil maq : maqInf){
+            maq.imagem="\\public\\images\\infantil\\id"+i+".jpg";
+            maq.id=i;
+            i++;
+        }
+		render(maqInf);
 	}
 
 	public static void exampleAventura() {
-		render();
+        List<MaquinaAventura> maqAv = search.searchAventura();
+
+        int i=0;
+        for(MaquinaAventura maq : maqAv){
+            maq.imagem="\\public\\images\\aventura\\id"+i+".jpg";
+            maq.id=i;
+            i++;
+        }
+		render(maqAv);
 	}
 
 	public static void exampleReflex() {
-		render();
+        List<MaquinaReflex> maqRf = search.searchReflex();
+
+        int i=0;
+        for(MaquinaReflex maq : maqRf){
+            maq.imagem="\\public\\images\\reflex\\id"+i+".jpg";
+            maq.id=i;
+            i++;
+        }
+		render(maqRf);
 	}
 
 
