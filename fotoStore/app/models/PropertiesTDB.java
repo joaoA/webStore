@@ -14,6 +14,9 @@ public class PropertiesTDB extends play.db.jpa.Model{
 	public Resource infantil;
 	public Resource objetiva;
 
+	//Id
+	public com.hp.hpl.jena.rdf.model.Property id;
+
 	//material_foto
 	public com.hp.hpl.jena.rdf.model.Property marca;
 	public com.hp.hpl.jena.rdf.model.Property preco;
@@ -65,6 +68,9 @@ public class PropertiesTDB extends play.db.jpa.Model{
 		this.aventura = m.getResource(NS + "Aventura");
 		this.infantil = m.getResource(NS + "Infatil");
 		this.objetiva = m.getResource(NS + "Objetiva");
+
+		//Id
+		this.id = m.getProperty(NS + "Id");
 
 		//material_foto
 		this.marca = m.getProperty(NS + "Marca");
