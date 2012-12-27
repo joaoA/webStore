@@ -19,7 +19,16 @@ public class Application extends Controller {
 	}
 
 	public static void exampleObjectivas() {
-		render();
+        List<Objetiva> objetivas = search.searchObjetiva();
+
+        int i=0;
+        for(Objetiva obj : objetivas){
+            obj.imagem="\\public\\images\\objetivas\\id"+i+".jpg";
+            obj.id=i;
+            i++;
+        }
+
+		render(objetivas);
 	}
 
 	public static void exampleInfantis() {
