@@ -1,0 +1,158 @@
+#{extends 'main.html' /}
+#{set title:'FotoStore' /}
+
+
+<style type="text/css" xmlns="http://www.w3.org/1999/html">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li style="color:#FFFFFF;">#{a @Application.index()}HOME#{/a}</li>
+              <li>#{a @Application.exampleBolsas()}Bolsas#{/a}</li>
+              <li>#{a @Application.exampleObjectivas()}Objectivas#{/a}</li>
+               <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Maquinas<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li>#{a @Application.exampleInfantis()}Infantis#{/a}</li>
+                  <li>#{a @Application.exampleAventura()}Aventura#{/a}</li>
+                  <li>#{a @Application.exampleReflex()}Reflex#{/a}</li>
+
+                </ul>
+              </li>
+
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Sidebar</li>
+              <li class="active"><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li class="nav-header">Sidebar</li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li class="nav-header">Sidebar</li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+              <li><a href="">Link</a></li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
+          <div class="hero-unit" style = "height:400px">
+              <div><table>
+              <tr>
+              <td><img class="img-polaroid" src=&{imagem} height="100px" width="100px"/></td>
+              <td><h3>&{titulo}<br/><h5>&nbsp;&nbsp;&{preco} €</h5></h3>
+
+              </tr>
+              </table>
+              </div>
+              <br>
+              <h5>Caracteristicas Especificas</h5>
+              <hr/>
+              <div class="span6">
+
+				<table width="700px">
+					<tbody>
+						#{list items:maqReflex, as:'maq'}
+						    <tr>
+						      <td style="border:1px solid black;" width="200px">Titulo</td>
+						      <td style="border:1px solid black;" width="500px">&{maq.titulo}</td>
+						    </tr>
+						    <tr>
+						      <td style="border:1px solid black;" width="200px">Marca</td>
+						      <td style="border:1px solid black;" width="500px">&{maq.marca}</td>
+						    </tr>
+                            <tr>
+                                <td style="border:1px solid black;" width="200px">objetiva</td>
+                                <td style="border:1px solid black;" width="500px">&{maq.objetiva}</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" width="200px">resolucao</td>
+                                <td style="border:1px solid black;" width="500px">&{maq.resolucao}</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" width="200px">bateria</td>
+                                <td style="border:1px solid black;" width="500px">&{maq.bateria}</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" width="200px">dimensao</td>
+                                <td style="border:1px solid black;" width="500px">&{maq.dimensao}</td>
+                            </tr>
+
+
+						#{/list}
+					</tbody>
+				</table>
+          </div>
+
+        </div><!--/span-->
+
+      </div><!--/row-->
+
+      <div class="row-fluid">
+          <div class="span12">
+              <div class="hero-unit">
+                  <h5>Recomendamos:</h5>
+                  <hr>
+                  <div class="row-fluid">
+                      <ul class="thumbnails">
+                          #{list items:recomendacao, as:'rec'}
+                          <li class="span3">
+                              <div class="thumbnail" style="border: 0px;">
+                                  <img width="70px" height="70px" src=&{rec.imagem}>
+                                  <div class="caption">
+                                      <p>&{rec.titulo}</p>
+                                      <p>&{rec.preco} €</p>
+                                  </div>
+                              </div>
+                          </li>
+                          #{/list}
+                      </ul>
+
+                  </div>
+
+              </div>
+          </div>
+      </div>
+      <hr>
+
+      <footer>
+        <p>© Company 2012</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+</div>
+
+

@@ -72,15 +72,17 @@
 				<h3>Objectivas</h3>
 				<table width="650px">
 					<tbody>
-						#{list items:objetivas, as:'obj'}
+                        #{paginate.list items:paginator, as:'obj'}
 						    <tr>
 						      <td style="border:1px solid black;" width="50px" heigth="50px"><center><img src=&{obj.imagem} alt="Smiley face" ></center></td>
 						      <td style="border:1px solid black;" width="600px">#{a @Application.objectivaById(obj.id)}&{obj.titulo}#{/a}</td>
 						      <td style="border:1px solid black;" width="100px"><center>&{obj.preco} €</center></td>
 						    </tr>
-						#{/list}
+                        #{/paginate.list}
+                        #{paginate.summary items:paginator/}
 					</tbody>
 				</table>
+                  #{paginate.controls items:paginator /}
           </div>
     
         </div><!--/span-->

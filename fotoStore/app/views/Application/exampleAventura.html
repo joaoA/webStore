@@ -72,15 +72,17 @@
 				<h3>Maquinas Aventura</h3>
 				<table width="650px">
 					<tbody>
-						#{list items:maqAv, as:'maq'}
+                        #{paginate.list items:paginator, as:'maq'}
 						    <tr>
 						      <td style="border:1px solid black;" width="50px" heigth="50px"><center><img src=&{maq.imagem} alt="Smiley face" height="42" width="42"></center></td	>
 						      <td style="border:1px solid black;" width="600px">#{a @Application.aventuraById(maq.id)}&{maq.titulo}#{/a}</td>
 						      <td style="border:1px solid black;" width="100px"><center>&{maq.preco} €</center></td>
 						    </tr>
-						#{/list}
+                        #{/paginate.list}
+                        #{paginate.summary items:paginator/}
 					</tbody>
 				</table>
+                  #{paginate.controls items:paginator /}
           </div>
     
         </div><!--/span-->

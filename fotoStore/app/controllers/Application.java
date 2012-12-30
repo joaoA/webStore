@@ -3,6 +3,7 @@ package controllers;
 import java.io.*;
 import play.*;
 import play.data.binding.As;
+import play.modules.paginate.ValuePaginator;
 import play.mvc.*;
 
 import java.util.*;
@@ -23,6 +24,8 @@ public class Application extends Controller {
 
     public static void exampleBolsas() {
         List<Bolsa> bolsas = search.searchBolsa();
+        ValuePaginator paginator = new ValuePaginator(bolsas);
+        paginator.setPageSize(5);
 
         int i=0;
         for(Bolsa b:bolsas){
@@ -33,7 +36,7 @@ public class Application extends Controller {
 
 
         //ValuePaginator paginator = new ValuePaginator(bolsas);
-        render(bolsas);
+        render(paginator);
     }
 
 
@@ -88,6 +91,8 @@ public class Application extends Controller {
 
     public static void exampleObjectivas() {
         List<Objetiva> objetivas = search.searchObjetiva();
+        ValuePaginator paginator = new ValuePaginator(objetivas);
+        paginator.setPageSize(5);
 
         int i=0;
         for(Objetiva obj : objetivas){
@@ -96,7 +101,7 @@ public class Application extends Controller {
             i++;
         }
 
-        render(objetivas);
+        render(paginator);
     }
 
 
@@ -152,6 +157,8 @@ public class Application extends Controller {
 
 	public static void exampleInfantis() {
         List<MaquinaInfantil> maqInf = search.searchInfantil();
+        ValuePaginator paginator = new ValuePaginator(maqInf);
+        paginator.setPageSize(5);
 
         int i=0;
         for(MaquinaInfantil maq : maqInf){
@@ -159,7 +166,7 @@ public class Application extends Controller {
             maq.id=i;
             i++;
         }
-		render(maqInf);
+		render(paginator);
 	}
 
     public static void infantilById(int id){
@@ -211,6 +218,9 @@ public class Application extends Controller {
 
 	public static void exampleAventura() {
         List<MaquinaAventura> maqAv = search.searchAventura();
+        ValuePaginator paginator = new ValuePaginator(maqAv);
+        paginator.setPageSize(5);
+
 
         int i=0;
         for(MaquinaAventura maq : maqAv){
@@ -218,7 +228,7 @@ public class Application extends Controller {
             maq.id=i;
             i++;
         }
-		render(maqAv);
+		render(paginator);
 	}
 
     public static void aventuraById(int id){
@@ -270,6 +280,8 @@ public class Application extends Controller {
 
 	public static void exampleReflex() {
         List<MaquinaReflex> maqRf = search.searchReflex();
+        ValuePaginator paginator = new ValuePaginator(maqRf);
+        paginator.setPageSize(5);
 
         int i=0;
         for(MaquinaReflex maq : maqRf){
@@ -277,10 +289,50 @@ public class Application extends Controller {
             maq.id=i;
             i++;
         }
-		render(maqRf);
+		render(paginator);
 	}
 
+    public static void reflexById(int id){
 
+        List<MaterialFoto> materiais = search.search("Reflex","Id",""+id);
+
+        List<MaquinaReflex> maqReflex = new ArrayList<MaquinaReflex>();
+        for(MaterialFoto mat: materiais) {
+            maqReflex.add((MaquinaReflex)mat);
+        }
+
+        String titulo = maqReflex.get(0).getTitulo();
+        String preco=maqReflex.get(0).getPreco();
+
+        String imagem = "\\public\\images\\reflex\\id"+id+".jpg";
+
+
+
+        /****************************************/
+         /*            Recomendacao            */
+        /****************************************/
+        List<MaterialFoto> recomendacao = recommend.recommendReflex(maqReflex.get(0));
+
+        // TODO:: tirar este PREGO!
+
+        MaquinaReflex gandaPrego= new MaquinaReflex();
+        gandaPrego.id=0;
+        gandaPrego.titulo="nada";
+        gandaPrego.preco="zero";
+        while(recomendacao.size()<4)
+            recomendacao.add(gandaPrego);
+
+        recomendacao= recomendacao.subList(0,4);
+
+        for (MaterialFoto mat : recomendacao){
+            mat.imagem = "\\public\\images\\reflex\\id"+mat.id+".jpg";
+            System.out.println(mat.titulo +"  "+mat.preco);
+        }
+
+        //TODO: melhorar recomendacao
+
+        render(maqReflex,titulo,preco,imagem,recomendacao);
+    }
 
 
 

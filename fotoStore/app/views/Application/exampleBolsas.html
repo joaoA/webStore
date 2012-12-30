@@ -73,15 +73,18 @@
 				<h3>Bolsas</h3>
 				<table width="650px">
 					<tbody>
-						#{list items:bolsas, as:'bolsa'}
+						#{paginate.list items:paginator, as:'bolsa'}
 						    <tr>
 						      <td style="border:1px solid black;" width="50px"><center><img src=&{bolsa.imagem} alt="Smiley face" height="42px" width="42px"></center></td>
 						      <td style="border:1px solid black;" width="600px">#{a @Application.bolsaById(bolsa.id)}&{bolsa.titulo}#{/a}</td>
 						      <td style="border:1px solid black;" width="100px"><center>&{bolsa.preco} €</center></td>
 						    </tr>
-						#{/list}
-					</tbody>
+                        #{/paginate.list}
+                        #{paginate.summary items:paginator/}
+                    </tbody>
 				</table>
+                  #{paginate.controls items:paginator /}
+
           </div>
 
         </div><!--/span-->
