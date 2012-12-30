@@ -69,7 +69,7 @@
           </div><!--/.well -->
         </div><!--/span-->
         <div class="span9">
-          <div class="hero-unit" style = "height:335px">
+          <div class="hero-unit" style = "height:400px">
               <div><table>
               <tr>
               <td><img class="img-polaroid" src=&{imagem} height="100px" width="100px"/></td>
@@ -85,23 +85,27 @@
 
 				<table width="700px">
 					<tbody>
-						#{list items:bolsas, as:'bolsa'}
-						    <tr>
-						      <td style="border:1px solid black;" width="200px">Titulo</td>
-						      <td style="border:1px solid black;" width="500px">&{bolsa.titulo}</td>
-						    </tr>
+						#{list items:objectivas, as:'objtvs'}
 						    <tr>
 						      <td style="border:1px solid black;" width="200px">Marca</td>
-						      <td style="border:1px solid black;" width="500px">&{bolsa.marca}</td>
+						      <td style="border:1px solid black;" width="500px">&{objtvs.marca}</td>
 						    </tr>
 						    <tr>
-						      <td style="border:1px solid black;" width="200px">Dimensao Exterior</td>
-						      <td style="border:1px solid black;" width="500px">&{bolsa.dimExterior}</td>
+						      <td style="border:1px solid black;" width="200px">Distancia focal</td>
+						      <td style="border:1px solid black;" width="500px">&{objtvs.distFoc}</td>
 						    </tr>
 						    <tr>
-						      <td style="border:1px solid black;" width="200px">Dimensao Interior</td>
-						      <td style="border:1px solid black;" width="500px">&{bolsa.dimInterior}</td>
+						      <td style="border:1px solid black;" width="200px">Dimensao </td>
+						      <td style="border:1px solid black;" width="500px">&{objtvs.dimensoes}</td>
 						    </tr>
+                            <tr>
+                                <td style="border:1px solid black;" width="200px">Peso </td>
+                                <td style="border:1px solid black;" width="500px">&{objtvs.peso}</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" width="200px">Abertura </td>
+                                <td style="border:1px solid black;" width="500px">&{objtvs.abertura}</td>
+                            </tr>
 						#{/list}
 					</tbody>
 				</table>
