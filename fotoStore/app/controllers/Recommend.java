@@ -9,6 +9,7 @@ import models.Maquina;
 import models.MaquinaAventura;
 import models.MaquinaReflex;
 import models.MaterialFoto;
+import models.Objetiva;
 
 public class Recommend {
 
@@ -39,7 +40,7 @@ public class Recommend {
 			max = Double.parseDouble(preco2.replace(",", ".")) * 12;
 		}
 		else if(option == 6) { //bolsa to bolsa
-			min = Double.parseDouble(preco2.replace(",", ".")) * 0.3;
+			min = Double.parseDouble(preco2.replace(",", ".")) * 0.8;
 			max = Double.parseDouble(preco2.replace(",", ".")) * 1.2;
 		}
 		else { //obj to obj
@@ -47,17 +48,16 @@ public class Recommend {
 			max = Double.parseDouble(preco2.replace(",", ".")) * 1.2;
 		}
 
-		double price = Double.parseDouble(preco.substring(1, preco.length() -1).replace(",", "."));
+		double price = Double.parseDouble(preco.replace(",", "."));
 		return min < price && price < max;
 	}
 
 	private boolean dimFit(String dimBolsa, String dimMaq) {
-		return volume(dimBolsa.substring(1, dimBolsa.length() -1)) >= volume(dimMaq);
+		return volume(dimBolsa) > volume(dimMaq);
 	}
 
 	private double volume(String dim) {
 
-//		System.out.println("dim = " + dim);
 		double vol = 0;
 
 		String[] ar = dim.replace(",",".").split(" ");
@@ -72,33 +72,48 @@ public class Recommend {
 		return vol;
 	}
 
+	private boolean quality(String quality, String distFocal) {
+		int dist = Integer.parseInt(distFocal.substring(0, distFocal.length()-2));
+
+		if(quality.equals("amador") && dist <= 30) {
+			return true;
+		}
+		else if(quality.equals("semi pro") && dist > 30 && dist <= 50) {
+			return true;
+		}
+		else if(quality.equals("pro") && dist > 50) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public List<MaterialFoto> recommendReflex(MaquinaReflex maq) {
 		List<MaterialFoto> materiais = new ArrayList<MaterialFoto>();
 		List<MaterialFoto> temp;
+		temp = search.search("Reflex","marca",maq.marca);
+		for(MaterialFoto mat: temp) {
+			if(mat.id != maq.id)
+				materiais.add(mat);
+		}
+
+		temp = search.search("Reflex","!marca",maq.marca);
+		for(MaterialFoto mat: temp) {
+			if(priceFit(mat.getPreco(),maq.getPreco(),1))
+				materiais.add(mat);
+		}
+
 		temp = search.search("Bolsas","all","");
 		for(MaterialFoto mat: temp) {
 			if(dimFit(((Bolsa)mat).getDimInterior(),maq.getDimensao()) && priceFit(mat.getPreco(),maq.getPreco(),2))
 				materiais.add(mat);
-
 		}
-//		materiais.addAll(temp);
-//		TODO dimensoes
-//		materiais.addAll(search("Reflex",
-//				"select ?element " +
-//						"where {" +
-//						"?element rdf:type xmlns:Reflex . " +
-//						"?element xmlns:Marca \"" + maq.marca + "\"" +
-//		TODO price
-//						"} "
-//				));
-//		materiais.addAll(search("Objetiva",
-//				"select ?element " +
-//						"where {" +
-//						"?element rdf:type xmlns:Objetiva . " +
-//						"?element xmlns:Marca \"" + maq.marca + "\"" +
-//		TODO price, qualidade
-//						"} "
-//				));
+		temp = search.search("Objetiva","marcaObj",maq.marca);
+		for(MaterialFoto mat: temp) {
+			if(quality(((MaquinaReflex)maq).getNivelUser(), ((Objetiva)mat).getDistFoc()))
+				materiais.add(mat);
+		}
 
 		System.out.println(materiais.size());
 
@@ -108,11 +123,24 @@ public class Recommend {
 	public List<MaterialFoto> recommendAventura(MaquinaAventura maq) {
 		List<MaterialFoto> materiais = new ArrayList<MaterialFoto>();
 		List<MaterialFoto> temp;
-		materiais.addAll(search.search("Aventura","marca",maq.marca));
-		temp = search.search("Aventura","all","");
+
+		temp = search.search("Aventura","marca",maq.marca);
+		for(MaterialFoto mat: temp) {
+			if(mat.id != maq.id)
+				materiais.add(mat);
+		}
+
+		temp = search.search("Aventura","!marca",maq.marca);
+		for(MaterialFoto mat: temp) {
+//			System.out.println(mat.titulo + " " + maq.preco + " " + mat.preco);
+			if(priceFit(mat.getPreco(),maq.getPreco(),1))
+				materiais.add(mat);
+		}
+
+		temp = search.search("Bolsas", "all", "");
 
 		for(MaterialFoto mat: temp) {
-			if(priceFit(mat.getPreco(),maq.getPreco(),1))
+			if(dimFit(((Bolsa)mat).getDimInterior(),maq.getDimensao()) && priceFit(mat.getPreco(),maq.getPreco(),2))
 				materiais.add(mat);
 		}
 
@@ -122,12 +150,27 @@ public class Recommend {
 
 	}
 
+	public List<MaterialFoto> recommendInfantil(MaquinaInfantil infantil) {
+		List<MaterialFoto> materiais = new ArrayList<MaterialFoto>();
+		List<MaterialFoto> temp;
+		temp = search.search("Infatil","all","");
+
+		for(MaterialFoto mat: temp) {
+			if(priceFit(mat.getPreco(),infantil.getPreco(),1) && mat.id != infantil.id)
+				materiais.add(mat);
+		}
+
+		System.out.println(materiais.size());
+
+		return materiais;
+	}
+
 	public List<MaterialFoto> recommendBolsa(Bolsa bolsa) {
 		List<MaterialFoto> materiais = new ArrayList<MaterialFoto>();
 		List<MaterialFoto> temp;
 		temp = search.search("Bolsas","all","");
 		for(MaterialFoto mat: temp) {
-			if(priceFit(mat.getPreco(),bolsa.getPreco(),6))
+			if(priceFit(mat.getPreco(),bolsa.getPreco(),6) && mat.id != bolsa.id)
 				materiais.add(mat);
 		}
 		temp = search.search("Reflex","all","");
@@ -138,24 +181,50 @@ public class Recommend {
 				materiais.add(mat);
 		}
 
-		System.out.println("\n\n\n"+materiais.size());
+		System.out.println(materiais.size());
 
 		return materiais;
 	}
 
-	public List<MaterialFoto> recommendInfantil(MaquinaInfantil infantil) {
+	public List<MaterialFoto> recommendObjetiva(Objetiva obj) {
 		List<MaterialFoto> materiais = new ArrayList<MaterialFoto>();
 		List<MaterialFoto> temp;
-		temp = search.search("Infatil","all","");
 
+		String marca = chkMarcaObj(obj);
+		System.out.println(marca);
+
+		temp = search.search("Objetiva","marcaObj",marca);
 		for(MaterialFoto mat: temp) {
-			if(priceFit(mat.getPreco(),infantil.getPreco(),1))
+			if(priceFit(mat.getPreco(),obj.getPreco(),7) && mat.id != obj.id)
+				materiais.add(mat);
+		}
+
+		temp = search.search("Reflex","marca",marca);
+		for(MaterialFoto mat: temp) {
+			if(quality(((MaquinaReflex)mat).getNivelUser(), obj.getDistFoc()))
 				materiais.add(mat);
 		}
 
 		System.out.println(materiais.size());
 
 		return materiais;
+	}
+
+	private String chkMarcaObj(Objetiva obj) {
+
+		String[] marcas = {"Canon","Nikon","Sony"};
+
+		for(String s: marcas) {
+			if(s.equals(obj.getMarca()))
+				return s;
+		}
+
+		for(String s: marcas) {
+			if(s.equals(obj.getTitulo().substring(obj.getTitulo().length()-5)))
+				return s;
+		}
+
+		return "";
 	}
 
 }

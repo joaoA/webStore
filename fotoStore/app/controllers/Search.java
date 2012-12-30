@@ -36,33 +36,7 @@ public class Search {
 		Model tdb = dataset.getDefaultModel();
 		PropertiesTDB props = new PropertiesTDB(tdb, NS);
 
-		String q;
-		if(scope.equals("all")) {
-			q =  "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-					"PREFIX xmlns: <http://www.owl-ontologies.com/maquinas.owl#> " +
-					"select ?element " +
-					"where {?element rdf:type xmlns:" + type + "} ";
-		}
-		else if(scope.equals("marca")) {
-			q = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-					"PREFIX xmlns: <http://www.owl-ontologies.com/maquinas.owl#> " +
-					"select ?element " +
-							"where {" +
-							"?element rdf:type xmlns:" + type + " . " +
-							"?element xmlns:Marca \"" + value + "\"" +
-							"} ";
-		}
-		else {
-			q = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-					"PREFIX xmlns: <http://www.owl-ontologies.com/maquinas.owl#> " +
-					"select ?element " +
-							"where {" +
-							"?element rdf:type xmlns:" + type + " . " +
-							"?element xmlns:Id \"" + value + "\"" +
-							"} ";
-		}
-
-		Query query = QueryFactory.create(q);
+		Query query = QueryFactory.create(BuildQuery(type, scope, value));
 		QueryExecution qexec = QueryExecutionFactory.create(query,tdb);
 		ResultSet results = qexec.execSelect();
 
@@ -132,6 +106,41 @@ public class Search {
         qexec.close();
 
         return lista;
+	}
+
+	public String BuildQuery(String type, String scope, String value) {
+
+		String q =  "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
+				"PREFIX xmlns: <http://www.owl-ontologies.com/maquinas.owl#> " +
+				"select ?element " +
+				"where {?element rdf:type xmlns:" + type + " ";
+		if(scope.equals("Id")) {
+			q += ". " +
+					"?element xmlns:Id \"" + value + "\"" +
+					"} ";
+		}
+		else if(scope.equals("marca")) {
+			q += ". " +
+				"?element xmlns:Marca ?marca . " +
+				"FILTER (?marca=\"" + value + "\")" +
+				"} ";
+		}
+		else if(scope.equals("!marca")) {
+			q += ". " +
+				"?element xmlns:Marca ?marca . " +
+				"FILTER (?marca!=\"" + value + "\")" +
+				"} ";
+		}
+		else if(scope.equals("marcaObj")) {
+			q += ". " +
+				"?element xmlns:Titulo ?marca . " +
+				"FILTER regex(?marca, \"" + value + "\")" +
+				"} ";
+		}
+		else { //all
+			q +=  "} ";
+		}
+		return q;
 	}
 
 	public List<MaquinaAventura> searchAventura() {
