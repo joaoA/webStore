@@ -29,7 +29,7 @@ public class Application extends Controller {
 
         int i=0;
         for(Bolsa b:bolsas){
-            b.imagem="\\public\\images\\bolsas\\id"+i+".jpg";
+            b.imagem=""+System.getProperty("file.separator")+"public"+System.getProperty("file.separator")+"images"+System.getProperty("file.separator")+"bolsas"+System.getProperty("file.separator")+"id"+i+".jpg";
             b.id=i;
             i++;
         }
@@ -53,7 +53,7 @@ public class Application extends Controller {
         String titulo = bolsas.get(0).getTitulo();
         String preco=bolsas.get(0).getPreco();
 
-        String imagem = "\\public\\images\\bolsas\\id"+id+".jpg";
+        String imagem =""+System.getProperty("file.separator")+"public"+System.getProperty("file.separator")+"images"+System.getProperty("file.separator")+"bolsas"+System.getProperty("file.separator")+"id"+id+".jpg";
 
 
 
@@ -74,7 +74,7 @@ public class Application extends Controller {
         recomendacao= recomendacao.subList(0,4);
 
         for (MaterialFoto mat : recomendacao){
-            mat.imagem = "\\public\\images\\bolsas\\id"+mat.id+".jpg";
+            mat.imagem = ""+System.getProperty("file.separator")+"public"+System.getProperty("file.separator")+"images"+System.getProperty("file.separator")+"bolsas"+System.getProperty("file.separator")+"id"+mat.id+".jpg";
             System.out.println(mat.titulo +"  "+mat.preco);
         }
 
