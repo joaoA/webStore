@@ -1,8 +1,8 @@
 #{extends 'main.html' /}
 #{set title:'FotoStore' /}
 
-    
-    <style type="text/css">
+
+<style type="text/css" xmlns="http://www.w3.org/1999/html">
       body {
         padding-top: 60px;
         padding-bottom: 40px;
@@ -20,7 +20,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          
+
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li style="color:#FFFFFF;">#{a @Application.index()}HOME#{/a}</li>
@@ -32,15 +32,17 @@
                   <li>#{a @Application.exampleInfantis()}Infantis#{/a}</li>
                   <li>#{a @Application.exampleAventura()}Aventura#{/a}</li>
                   <li>#{a @Application.exampleReflex()}Reflex#{/a}</li>
-                  
+
                 </ul>
               </li>
-              
+
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
+
+
 
     <div class="container-fluid">
       <div class="row-fluid">
@@ -68,24 +70,72 @@
         </div><!--/span-->
         <div class="span9">
           <div class="hero-unit" style = "height:335px">
+              <div><table>
+              <tr>
+              <td><img class="img-polaroid" src=&{imagem} height="100px" width="100px"/></td>
+              <td><h3>&{titulo}<br/><h5>&nbsp;&nbsp;&{preco} €</h5></h3>
+
+              </tr>
+              </table>
+              </div>
+              <br>
+              <h5>Caracteristicas Especificas</h5>
+              <hr/>
               <div class="span6">
-				<h3>Objectivas</h3>
-				<table width="650px">
+
+				<table width="700px">
 					<tbody>
-						#{list items:objetivas, as:'obj'}
+						#{list items:bolsas, as:'bolsa'}
 						    <tr>
-						      <td style="border:1px solid black;" width="50px" heigth="50px"><center><img src=&{obj.imagem} alt="Smiley face" ></center></td>
-						      <td style="border:1px solid black;" width="600px">#{a @Application.objectivaById(obj.id)}&{obj.titulo}#{/a}</td>
-						      <td style="border:1px solid black;" width="100px"><center>&{obj.preco} €</center></td>
+						      <td style="border:1px solid black;" width="200px">Titulo</td>
+						      <td style="border:1px solid black;" width="500px">&{bolsa.titulo}</td>
+						    </tr>
+						    <tr>
+						      <td style="border:1px solid black;" width="200px">Marca</td>
+						      <td style="border:1px solid black;" width="500px">&{bolsa.marca}</td>
+						    </tr>
+						    <tr>
+						      <td style="border:1px solid black;" width="200px">Dimensao Exterior</td>
+						      <td style="border:1px solid black;" width="500px">&{bolsa.dimExterior}</td>
+						    </tr>
+						    <tr>
+						      <td style="border:1px solid black;" width="200px">Dimensao Interior</td>
+						      <td style="border:1px solid black;" width="500px">&{bolsa.dimInterior}</td>
 						    </tr>
 						#{/list}
 					</tbody>
 				</table>
           </div>
-    
+
         </div><!--/span-->
+
       </div><!--/row-->
 
+      <div class="row-fluid">
+          <div class="span12">
+              <div class="hero-unit">
+                  <h5>Recomendamos:</h5>
+                  <hr>
+                  <div class="row-fluid">
+                      <ul class="thumbnails">
+                          #{list items:recomendacao, as:'rec'}
+                          <li class="span3">
+                              <div class="thumbnail" style="border: 0px;">
+                                  <img width="70px" height="70px" src=&{rec.imagem}>
+                                  <div class="caption">
+                                      <p>&{rec.titulo}</p>
+                                      <p>&{rec.preco} €</p>
+                                  </div>
+                              </div>
+                          </li>
+                          #{/list}
+                      </ul>
+
+                  </div>
+
+              </div>
+          </div>
+      </div>
       <hr>
 
       <footer>
@@ -93,6 +143,6 @@
       </footer>
 
     </div><!--/.fluid-container-->
-
-
 </div>
+
+
