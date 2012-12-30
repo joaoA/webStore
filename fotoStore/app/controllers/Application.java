@@ -117,7 +117,7 @@ public class Application extends Controller {
 
 
         /****************************************/
-            /*            Recomendacao            */
+         /*            Recomendacao            */
         /****************************************/
         List<MaterialFoto> recomendacao = recommend.recommendObjetiva(objectivas.get(0));
 
