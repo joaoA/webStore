@@ -17,6 +17,7 @@ public class Application extends Controller {
 	public static void index() {
 		render();
 	}
+/*************************************************************************/
 
 /*********************          BOLSA           *************************/
 
@@ -81,8 +82,7 @@ public class Application extends Controller {
     }
 
 
-/************************************************************************/
-
+/****************************************************************************/
 
 /*********************          Objectiva           *************************/
 
@@ -121,14 +121,14 @@ public class Application extends Controller {
         /****************************************/
         List<MaterialFoto> recomendacao = recommend.recommendObjetiva(objectivas.get(0));
 
-//        // TODO:: tirar este PREGO!
-//
-//        Bolsa gandaPrego= new Bolsa();
-//        gandaPrego.id=0;
-//        gandaPrego.titulo="nada";
-//        gandaPrego.preco="zero";
-//        while(recomendacao.size()<4)
-//            recomendacao.add(gandaPrego);
+        // TODO:: tirar este PREGO!
+
+        Objetiva gandaPrego= new Objetiva();
+        gandaPrego.id=0;
+        gandaPrego.titulo="nada";
+        gandaPrego.preco="zero";
+        while(recomendacao.size()<4)
+            recomendacao.add(gandaPrego);
 
         recomendacao= recomendacao.subList(0,4);
 
@@ -147,6 +147,8 @@ public class Application extends Controller {
 
 /************************************************************************/
 
+/*****************          Maquinas Infantis           *****************/
+
 
 
 	public static void exampleInfantis() {
@@ -161,6 +163,54 @@ public class Application extends Controller {
 		render(maqInf);
 	}
 
+    public static void infantilById(int id){
+
+        List<MaterialFoto> materiais = search.search("Infatil","Id",""+id);
+
+        List<MaquinaInfantil> maqInfantil = new ArrayList<MaquinaInfantil>();
+        for(MaterialFoto mat: materiais) {
+            maqInfantil.add((MaquinaInfantil)mat);
+        }
+
+        String titulo = maqInfantil.get(0).getTitulo();
+        String preco=maqInfantil.get(0).getPreco();
+
+        String imagem = "\\public\\images\\infantil\\id"+id+".jpg";
+
+
+
+        /****************************************/
+         /*            Recomendacao            */
+        /****************************************/
+        List<MaterialFoto> recomendacao = recommend.recommendInfantil(maqInfantil.get(0));
+
+        // TODO:: tirar este PREGO!
+
+        MaquinaInfantil gandaPrego= new MaquinaInfantil();
+        gandaPrego.id=0;
+        gandaPrego.titulo="nada";
+        gandaPrego.preco="zero";
+        while(recomendacao.size()<4)
+            recomendacao.add(gandaPrego);
+
+        recomendacao= recomendacao.subList(0,4);
+
+        for (MaterialFoto mat : recomendacao){
+            mat.imagem = "\\public\\images\\infantil\\id"+mat.id+".jpg";
+            System.out.println(mat.titulo +"  "+mat.preco);
+        }
+
+        //TODO: para o caso das  bolsas mais caras, a recomendacao geral 1 bolsa,
+        //TODO : temos que meter isto a gerar mais algumas, nem que seja aleatorio...depois explicamos ao prof o pq
+
+        render(maqInfantil,titulo,preco,imagem,recomendacao);
+    }
+
+
+/************************************************************************/
+
+/*****************          Maquinas Aventura           *****************/
+
 	public static void exampleAventura() {
         List<MaquinaAventura> maqAv = search.searchAventura();
 
@@ -172,6 +222,10 @@ public class Application extends Controller {
         }
 		render(maqAv);
 	}
+
+/************************************************************************/
+
+/*****************          Maquinas Reflex            ******************/
 
 	public static void exampleReflex() {
         List<MaquinaReflex> maqRf = search.searchReflex();
