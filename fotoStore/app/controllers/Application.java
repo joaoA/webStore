@@ -137,8 +137,7 @@ public class Application extends Controller {
             System.out.println(mat.titulo +"  "+mat.preco);
         }
 
-        //TODO: para o caso das  bolsas mais caras, a recomendacao geral 1 bolsa,
-        //TODO : temos que meter isto a gerar mais algumas, nem que seja aleatorio...depois explicamos ao prof o pq
+        //TODO: melhorar recomendacao
 
         render(objectivas,titulo,preco,imagem,recomendacao);
     }
@@ -200,8 +199,7 @@ public class Application extends Controller {
             System.out.println(mat.titulo +"  "+mat.preco);
         }
 
-        //TODO: para o caso das  bolsas mais caras, a recomendacao geral 1 bolsa,
-        //TODO : temos que meter isto a gerar mais algumas, nem que seja aleatorio...depois explicamos ao prof o pq
+        //TODO: melhorar recomendacao
 
         render(maqInfantil,titulo,preco,imagem,recomendacao);
     }
@@ -222,6 +220,49 @@ public class Application extends Controller {
         }
 		render(maqAv);
 	}
+
+    public static void aventuraById(int id){
+
+        List<MaterialFoto> materiais = search.search("Aventura","Id",""+id);
+
+        List<MaquinaAventura> maqAventura = new ArrayList<MaquinaAventura>();
+        for(MaterialFoto mat: materiais) {
+            maqAventura.add((MaquinaAventura)mat);
+        }
+
+        String titulo = maqAventura.get(0).getTitulo();
+        String preco=maqAventura.get(0).getPreco();
+
+        String imagem = "\\public\\images\\aventura\\id"+id+".jpg";
+
+
+
+        /****************************************/
+         /*            Recomendacao            */
+        /****************************************/
+        List<MaterialFoto> recomendacao = recommend.recommendAventura(maqAventura.get(0));
+
+        // TODO:: tirar este PREGO!
+
+        MaquinaAventura gandaPrego= new MaquinaAventura();
+        gandaPrego.id=0;
+        gandaPrego.titulo="nada";
+        gandaPrego.preco="zero";
+        while(recomendacao.size()<4)
+            recomendacao.add(gandaPrego);
+
+        recomendacao= recomendacao.subList(0,4);
+
+        for (MaterialFoto mat : recomendacao){
+            mat.imagem = "\\public\\images\\aventura\\id"+mat.id+".jpg";
+            System.out.println(mat.titulo +"  "+mat.preco);
+        }
+
+        //TODO: melhorar recomendacao -> a 1º maquina nao recomenda nada
+
+        render(maqAventura,titulo,preco,imagem,recomendacao);
+    }
+
 
 /************************************************************************/
 
