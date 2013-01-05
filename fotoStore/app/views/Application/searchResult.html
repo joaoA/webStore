@@ -1,0 +1,101 @@
+#{extends 'main.html' /}
+#{set title:'FotoStore' /}
+
+    
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li style="color:#FFFFFF;">#{a @Application.index()}HOME#{/a}</li>
+              <li>#{a @Application.exampleBolsas()}Bolsas#{/a}</li>
+              <li>#{a @Application.exampleObjectivas()}Objectivas#{/a}</li>
+               <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Maquinas<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li>#{a @Application.exampleInfantis()}Infantis#{/a}</li>
+                  <li>#{a @Application.exampleAventura()}Aventura#{/a}</li>
+                  <li>#{a @Application.exampleReflex()}Reflex#{/a}</li>
+                  
+                </ul>
+              </li>
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </li>
+
+                <li>
+                    #{form @searchResult()}
+                    <div class="navbar-search pull-right" style="margin-top:9px">
+                        <input type="text" class="search-query" placeholder="Search" name="search"/>
+                    </div>
+                    #{/}
+                </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+
+        <div class="span12">
+          <div class="hero-unit" style = "height:335px">
+              <div class="span6">
+				<h3>Maquinas Aventura</h3>
+                  <h3>&{search}</h3>
+				<table width="650px">
+					<tbody>
+                        #{paginate.list items:paginator, as:'maq'}
+						    <tr>
+						      <td style="border:1px solid black;" width="50px" heigth="50px"><center><img src=&{maq.imagem} alt="Smiley face" height="42" width="42"></center></td	>
+						      <td style="border:1px solid black;" width="600px">#{a @Application.aventuraById(maq.id)}&{maq.titulo}#{/a}</td>
+						      <td style="border:1px solid black;" width="100px"><center>&{maq.preco} €</center></td>
+						    </tr>
+                        #{/paginate.list}
+                        #{paginate.summary items:paginator/}
+					</tbody>
+				</table>
+                  #{paginate.controls items:paginator /}
+          </div>
+    
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>© Company 2012</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+</div>
+
