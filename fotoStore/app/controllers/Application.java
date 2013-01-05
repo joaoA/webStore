@@ -334,7 +334,19 @@ public class Application extends Controller {
         render(maqReflex,titulo,preco,imagem,recomendacao);
     }
 
+/************************************************************************/
 
+/*****************          Search Results            ******************/
+
+    public static void searchResult(String search){
+
+        // search e' a string que vem da search bar
+
+        System.out.println(search);
+
+
+        render(search);
+    }
 
 
 }

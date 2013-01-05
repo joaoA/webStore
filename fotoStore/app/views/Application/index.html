@@ -36,16 +36,19 @@
                   <li><a href="#">#{a @Application.exampleReflex()}Reflex#{/a}</a></li>                 
                 </ul>
               </li>
-
                 <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-                <form class="navbar-search pull-right" style="margin-top:9px">
-                    <input type="text" class="search-query" placeholder="Search" name="search">
-                </form>
-
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </li>
+              <li>
+              #{form @searchResult()}
+                <div class="navbar-search pull-right" style="margin-top:9px">
+                    <input type="text" class="search-query" placeholder="Search" name="search"/>
+                </div>
+                #{/}
+              </li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!-- /.navbar-inner -->
