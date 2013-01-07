@@ -69,14 +69,39 @@
         <div class="span12">
           <div class="hero-unit" style = "height:335px">
               <div class="span6">
-				<h3>Maquinas Aventura</h3>
-                  <h3>&{search}</h3>
+				<h4>Resultados da pesquisa por: &{search} </h4>
+                  <h3></h3>
 				<table width="650px">
 					<tbody>
                         #{paginate.list items:paginator, as:'maq'}
 						    <tr>
 						      <td style="border:1px solid black;" width="50px" heigth="50px"><center><img src=&{maq.imagem} alt="Smiley face" height="42" width="42"></center></td	>
-						      <td style="border:1px solid black;" width="600px">#{a @Application.aventuraById(maq.id)}&{maq.titulo}#{/a}</td>
+						      <td style="border:1px solid black;" width="600px">
+                                  #{if maq.tipoMat=="Bolsa"}
+                                    #{a @Application.bolsaById(maq.id)}&{maq.titulo}#{/a}
+                                  #{/if}
+
+                                  #{elseif maq.tipoMat=="Reflex"}
+                                    #{a @Application.reflexById(maq.id)}&{maq.titulo}#{/a}
+                                  #{/elseif}
+
+                                  #{elseif maq.tipoMat=="Objetiva"}
+                                    #{a @Application.objectivaById(maq.id)}&{maq.titulo}#{/a}
+                                  #{/elseif}
+
+                                  #{elseif maq.tipoMat=="Infantil"}
+                                    #{a @Application.infantilById(maq.id)}&{maq.titulo}#{/a}
+                                  #{/elseif}
+
+                                  #{elseif maq.tipoMat=="Aventura"}
+                                    #{a @Application.aventuraById(maq.id)}&{maq.titulo}#{/a}
+                                  #{/elseif}
+
+                                  #{else}
+                                    tipo errado!
+                                  #{/else}
+
+                                  </td>
 						      <td style="border:1px solid black;" width="100px"><center>&{maq.preco} €</center></td>
 						    </tr>
                         #{/paginate.list}

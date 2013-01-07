@@ -215,7 +215,7 @@ public class Application extends Controller {
 
         for (MaterialFoto mat : recomendacao){
             mat.imagem = "\\public\\images\\infantil\\id"+mat.id+".jpg";
-            System.out.println(mat.titulo +"  "+mat.preco);
+            System.out.println(mat.titulo +"  "+mat.preco +"  "+ mat.tipoMat );
         }
 
         render(maqInfantil,titulo,preco,imagem,recomendacao);
@@ -280,7 +280,7 @@ public class Application extends Controller {
 
         for (MaterialFoto mat : recomendacao){
             mat.imagem = "\\public\\images\\aventura\\id"+mat.id+".jpg";
-            System.out.println(mat.titulo +"  "+mat.preco);
+            System.out.println(mat.titulo +"  "+mat.preco +"  "+ mat.tipoMat );
         }
 
         recomendacao.get(3).imagem =  "\\public\\images\\bolsas\\id"+recomendacao.get(3).id+".jpg";
@@ -377,7 +377,7 @@ public class Application extends Controller {
 
         for (MaterialFoto mat : recomendacao){
             mat.imagem = "\\public\\images\\reflex\\id"+mat.id+".jpg";
-            System.out.println(mat.titulo +"  "+mat.preco);
+            System.out.println(mat.titulo +"  "+mat.preco +"  "+ mat.tipoMat );
         }
 
         recomendacao.get(2).imagem =  "\\public\\images\\objetivas\\id"+recomendacao.get(2).id+".jpg";
@@ -392,12 +392,52 @@ public class Application extends Controller {
 
     public static void searchResult(String search){
 
-        // search e' a string que vem da search bar
 
-        System.out.println(search);
+       /******************/
+        Bolsa bolsa = new Bolsa();
+        bolsa.id=0;
+        bolsa.titulo="bolsa mai linda";
+        bolsa.preco="10";
+        bolsa.tipoMat="Bolsa";
+
+        MaquinaReflex rflx = new MaquinaReflex();
+        rflx.id=0;
+        rflx.titulo="maquina xpto";
+        rflx.preco="1000";
+        rflx.tipoMat="Reflex";
+        /******************/
+
+        List<MaterialFoto> results=new ArrayList<MaterialFoto>();
+
+        /******************/
+        results.add(bolsa);
+        results.add(rflx);
+        /******************/
+
+        ValuePaginator paginator = new ValuePaginator(results);
+        paginator.setPageSize(5);
 
 
-        render(search);
+        for(MaterialFoto mat : results){
+            if(mat.getTipoMat().equalsIgnoreCase("Bolsa"))
+                mat.imagem="\\public\\images\\bolsas\\id"+mat.id+".jpg";
+
+            else if(mat.getTipoMat().equalsIgnoreCase("Objetiva"))
+                mat.imagem="\\public\\images\\objetivas\\id"+mat.id+".jpg";
+
+            else if(mat.getTipoMat().equalsIgnoreCase("Infantil"))
+                mat.imagem="\\public\\images\\infantil\\id"+mat.id+".jpg";
+
+            else if(mat.getTipoMat().equalsIgnoreCase("Aventura"))
+                mat.imagem="\\public\\images\\aventura\\id"+mat.id+".jpg";
+
+            else if(mat.getTipoMat().equalsIgnoreCase("Reflex"))
+                mat.imagem="\\public\\images\\reflex\\id"+mat.id+".jpg";
+        }
+
+
+
+        render(search,paginator);
     }
 
 
