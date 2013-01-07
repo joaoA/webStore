@@ -272,6 +272,10 @@ public class Search {
 		List<MaterialFoto> mats, temp;
 		String p = parsed[1];
 
+		if(parsed[2].equals("erro")) {
+			parsed[1] = "all";
+		}
+
 		if(p.equals(NS + "Preco")) {
 			parsed[1] = "all";
 		}
