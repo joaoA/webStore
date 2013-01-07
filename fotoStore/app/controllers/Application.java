@@ -242,17 +242,29 @@ public class Application extends Controller {
 
 /*****************          Maquinas Aventura           *****************/
 
-	public static void exampleAventura() {
+	public static void exampleAventura(String marca) {
+        ValuePaginator paginator=null;
+
+        if(marca == null){
         List<MaquinaAventura> maqAv = search.searchAventura();
-        ValuePaginator paginator = new ValuePaginator(maqAv);
+        paginator = new ValuePaginator(maqAv);
         paginator.setPageSize(5);
 
 
-        int i=0;
+
         for(MaquinaAventura maq : maqAv){
-            maq.imagem="\\public\\images\\aventura\\id"+i+".jpg";
-            maq.id=i;
-            i++;
+            maq.imagem="\\public\\images\\aventura\\id"+maq.id+".jpg";
+        }
+
+        }
+        else{
+            List<MaterialFoto> maqAv = search.search("Aventura","marca",marca);
+            paginator = new ValuePaginator(maqAv);
+            paginator.setPageSize(5);
+
+            for(MaterialFoto maq : maqAv){
+                maq.imagem="\\public\\images\\aventura\\id"+maq.id+".jpg";
+            }
         }
 		render(paginator);
 	}
