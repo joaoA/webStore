@@ -276,7 +276,14 @@ public class Search {
 			parsed[1] = "all";
 		}
 
-		if(parsed[0].equals(NS + "Maquina")) {
+		if(parsed[0].equals("all")) {
+			temp = quickSearch(tdb, props, "xmlns:Aventura", parsed[1], parsed[2]);
+			temp.addAll(quickSearch(tdb, props, "xmlns:Reflex", parsed[1], parsed[2]));
+			temp.addAll(quickSearch(tdb, props, "xmlns:Infatil", parsed[1], parsed[2]));
+			temp.addAll(quickSearch(tdb, props, "xmlns:Bolsas", parsed[1], parsed[2]));
+			temp.addAll(quickSearch(tdb, props, "xmlns:Objetiva", parsed[1], parsed[2]));
+		}
+		else if(parsed[0].equals(NS + "Maquina")) {
 			temp = quickSearch(tdb, props, "xmlns:Aventura", parsed[1], parsed[2]);
 			temp.addAll(quickSearch(tdb, props, "xmlns:Reflex", parsed[1], parsed[2]));
 			temp.addAll(quickSearch(tdb, props, "xmlns:Infatil", parsed[1], parsed[2]));
