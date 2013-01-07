@@ -316,16 +316,27 @@ public class Application extends Controller {
 
 /*****************          Maquinas Reflex            ******************/
 
-	public static void exampleReflex() {
-        List<MaquinaReflex> maqRf = search.searchReflex();
-        ValuePaginator paginator = new ValuePaginator(maqRf);
-        paginator.setPageSize(5);
+	public static void exampleReflex(String marca) {
+        ValuePaginator paginator=null;
 
-        int i=0;
-        for(MaquinaReflex maq : maqRf){
-            maq.imagem="\\public\\images\\reflex\\id"+i+".jpg";
-            maq.id=i;
-            i++;
+        if(marca == null){
+            List<MaquinaReflex> maqRf = search.searchReflex();
+            paginator = new ValuePaginator(maqRf);
+            paginator.setPageSize(5);
+
+
+            for(MaquinaReflex maq : maqRf){
+                maq.imagem="\\public\\images\\reflex\\id"+maq.id+".jpg";
+            }
+        }
+        else{
+            List<MaterialFoto> maqRf = search.search("Reflex","marca",marca);
+            paginator = new ValuePaginator(maqRf);
+            paginator.setPageSize(5);
+
+            for(MaterialFoto maq : maqRf){
+                maq.imagem="\\public\\images\\reflex\\id"+maq.id+".jpg";
+            }
         }
 		render(paginator);
 	}

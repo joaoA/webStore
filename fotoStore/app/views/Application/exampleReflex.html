@@ -65,25 +65,15 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li class="active"><a href="">Link</a></li>
-              <li><a href="">Link</a></li>
-              <li><a href="">Link</a></li>
-              <li><a href="">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="">Link</a></li>
-              <li><a href="">Link</a></li>
-              <li><a href="">Link</a></li>
-              <li><a href="">Link</a></li>
-              <li><a href="">Link</a></li>
-              <li><a href="">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="">Link</a></li>
-              <li><a href="">Link</a></li>
-              <li><a href="">Link</a></li>
-            </ul>
+            <div class="well sidebar-nav" style = "height:435px">
+                <ul class="nav nav-list">
+                    <li class="nav-header">Escolha a sua marca:</li>
+                    <li><a href="">#{a @Application.exampleReflex("Canon")}Canon#{/a}</a></li>
+                    <li><a href="">#{a @Application.exampleReflex("Nikon")}Nikon#{/a}</a></li>
+                    <li><a href="">#{a @Application.exampleReflex("Sony")}Sony#{/a}</a></li>
+                    <hr>
+                    <li><a href="">#{a @Application.exampleReflex()}Todas#{/a}</a></li>
+                </ul>
           </div><!--/.well -->
         </div><!--/span-->
         <div class="span9">
