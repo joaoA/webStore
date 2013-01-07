@@ -105,18 +105,28 @@ public class Application extends Controller {
 
 /*********************          Objectiva           *************************/
 
-    public static void exampleObjectivas() {
-        List<Objetiva> objetivas = search.searchObjetiva();
-        ValuePaginator paginator = new ValuePaginator(objetivas);
-        paginator.setPageSize(5);
+    public static void exampleObjectivas(String marca) {
 
-        int i=0;
-        for(Objetiva obj : objetivas){
-            obj.imagem="\\public\\images\\objetivas\\id"+i+".jpg";
-            obj.id=i;
-            i++;
+        ValuePaginator paginator = null;
+        if(marca == null){
+            List<Objetiva> objetivas = search.searchObjetiva();
+            paginator = new ValuePaginator(objetivas);
+            paginator.setPageSize(5);
+
+
+            for(Objetiva obj : objetivas){
+                obj.imagem="\\public\\images\\objetivas\\id"+obj.id+".jpg";
+            }
         }
+        else{
+            List<MaterialFoto> objetivas = search.search("Objetiva","marca",marca);
+            paginator = new ValuePaginator(objetivas);
+            paginator.setPageSize(5);
 
+            for(MaterialFoto obj : objetivas){
+                obj.imagem="\\public\\images\\objetivas\\id"+obj.id+".jpg";
+            }
+        }
         render(paginator);
     }
 
