@@ -22,20 +22,36 @@ public class Application extends Controller {
 
 /*********************          BOLSA           *************************/
 
-    public static void exampleBolsas() {
-        List<Bolsa> bolsas = search.searchBolsa();
-        ValuePaginator paginator = new ValuePaginator(bolsas);
-        paginator.setPageSize(5);
+    public static void exampleBolsas(String marca) {
 
-        int i=0;
-        for(Bolsa b:bolsas){
-            b.imagem=""+System.getProperty("file.separator")+"public"+System.getProperty("file.separator")+"images"+System.getProperty("file.separator")+"bolsas"+System.getProperty("file.separator")+"id"+i+".jpg";
-            b.id=i;
-            i++;
+        ValuePaginator paginator=null;
+        if(marca==null){
+            List<Bolsa> bolsas = search.searchBolsa();
+            paginator = new ValuePaginator(bolsas);
+            paginator.setPageSize(5);
+
+            int i=0;
+            for(Bolsa b:bolsas){
+                b.imagem="\\public\\images\\bolsas\\id"+b.id+".jpg";
+                //b.id=i;
+                i++;
+            }
+
+
         }
+        else{
+            List<MaterialFoto> bolsas = search.search("Bolsas","marca",marca);
+            paginator = new ValuePaginator(bolsas);
+            paginator.setPageSize(5);
 
+            int i=0;
+            for(MaterialFoto b:bolsas){
+                b.imagem="\\public\\images\\bolsas\\id"+b.id+".jpg";
+                //b.id=i;
+                i++;
+            }
 
-        //ValuePaginator paginator = new ValuePaginator(bolsas);
+        }
         render(paginator);
     }
 
@@ -53,7 +69,7 @@ public class Application extends Controller {
         String titulo = bolsas.get(0).getTitulo();
         String preco=bolsas.get(0).getPreco();
 
-        String imagem =""+System.getProperty("file.separator")+"public"+System.getProperty("file.separator")+"images"+System.getProperty("file.separator")+"bolsas"+System.getProperty("file.separator")+"id"+id+".jpg";
+        String imagem ="\\public\\images\\bolsas\\id"+id+".jpg";
 
 
 
@@ -74,7 +90,7 @@ public class Application extends Controller {
         recomendacao= recomendacao.subList(0,4);
 
         for (MaterialFoto mat : recomendacao){
-            mat.imagem = ""+System.getProperty("file.separator")+"public"+System.getProperty("file.separator")+"images"+System.getProperty("file.separator")+"bolsas"+System.getProperty("file.separator")+"id"+mat.id+".jpg";
+            mat.imagem = "\\public\\images\\bolsas\\id"+mat.id+".jpg";
             System.out.println(mat.titulo +"  "+mat.preco);
         }
 
