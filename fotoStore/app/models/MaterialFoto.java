@@ -10,6 +10,7 @@ public class MaterialFoto extends Model {
 	public String marca;
 	public String preco;
     public String imagem;
+    public String tipoMat;
     public int id;
 
 	public String getTitulo() {
@@ -39,6 +40,12 @@ public class MaterialFoto extends Model {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getTipoMat() {
+		return tipoMat;
+	}
+	public void setTipoMat(String tipoMat) {
+		this.tipoMat = tipoMat;
 	}
 
 

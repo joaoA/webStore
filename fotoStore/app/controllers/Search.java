@@ -98,6 +98,7 @@ public class Search {
 			matFoto.setTitulo(trimQuote(sol.get("element").asResource().getProperty(props.titulo).asTriple().getMatchObject().toString()));
 			matFoto.setMarca(trimQuote(sol.get("element").asResource().getProperty(props.marca).asTriple().getMatchObject().toString()));
 			matFoto.setPreco(trimQuote(sol.get("element").asResource().getProperty(props.preco).asTriple().getMatchObject().toString()));
+			matFoto.setTipoMat(trimQuote(sol.get("element").asResource().getProperty(props.tipoMat).asTriple().getMatchObject().toString()));
 			matFoto.setId(Integer.parseInt(trimQuote(sol.get("element").asResource().getProperty(props.id).asTriple().getMatchObject().toString())));
 
 			lista.add(matFoto);

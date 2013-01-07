@@ -16,6 +16,7 @@ public class PropertiesTDB extends play.db.jpa.Model{
 
 	//Id
 	public com.hp.hpl.jena.rdf.model.Property id;
+	public com.hp.hpl.jena.rdf.model.Property tipoMat;
 
 	//material_foto
 	public com.hp.hpl.jena.rdf.model.Property marca;
@@ -71,6 +72,7 @@ public class PropertiesTDB extends play.db.jpa.Model{
 
 		//Id
 		this.id = m.getProperty(NS + "Id");
+		this.tipoMat = m.getProperty(NS + "TipoMaterial");
 
 		//material_foto
 		this.marca = m.getProperty(NS + "Marca");
