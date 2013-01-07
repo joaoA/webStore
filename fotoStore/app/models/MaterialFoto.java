@@ -48,5 +48,12 @@ public class MaterialFoto extends Model {
 		this.tipoMat = tipoMat;
 	}
 
+	@Override
+	public String toString() {
+		return "MaterialFoto [titulo=" + titulo + ", marca=" + marca
+				+ ", preco=" + preco + ", imagem=" + imagem + ", tipoMat="
+				+ tipoMat + ", id=" + id + "]";
+	}
+
 
 }

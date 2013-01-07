@@ -393,29 +393,33 @@ public class Application extends Controller {
     public static void searchResult(String search){
 
 
+    	System.out.println("search = " +search);
+
        /******************/
-        Bolsa bolsa = new Bolsa();
-        bolsa.id=0;
-        bolsa.titulo="bolsa mai linda";
-        bolsa.preco="10";
-        bolsa.tipoMat="Bolsa";
+//        Bolsa bolsa = new Bolsa();
+//        bolsa.id=0;
+//        bolsa.titulo="bolsa mai linda";
+//        bolsa.preco="10";
+//        bolsa.tipoMat="Bolsa";
+//
+//        MaquinaReflex rflx = new MaquinaReflex();
+//        rflx.id=0;
+//        rflx.titulo="maquina xpto";
+//        rflx.preco="1000";
+//        rflx.tipoMat="Reflex";
+//        /******************/
+//
+//        List<MaterialFoto> results=new ArrayList<MaterialFoto>();
+//
+//        /******************/
+//        results.add(bolsa);
+//        results.add(rflx);
+//        /******************/
 
-        MaquinaReflex rflx = new MaquinaReflex();
-        rflx.id=0;
-        rflx.titulo="maquina xpto";
-        rflx.preco="1000";
-        rflx.tipoMat="Reflex";
-        /******************/
-
-        List<MaterialFoto> results=new ArrayList<MaterialFoto>();
-
-        /******************/
-        results.add(bolsa);
-        results.add(rflx);
-        /******************/
+    	List<MaterialFoto> results = Application.search.parse(search);
 
         ValuePaginator paginator = new ValuePaginator(results);
-        paginator.setPageSize(5);
+        paginator.setPageSize(results.size());
 
 
         for(MaterialFoto mat : results){

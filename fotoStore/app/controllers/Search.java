@@ -22,21 +22,23 @@ import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 import com.hp.hpl.jena.tdb.TDBFactory;
 
 public class Search {
 
 	final String NS = "http://www.owl-ontologies.com/maquinas.owl#";
+	final String directory = "database";
 
 	public List<MaterialFoto> search(String type, String scope, String value) {
 
-		String directory = "database";
 		Dataset dataset = TDBFactory.createDataset(directory);
 
 		Model tdb = dataset.getDefaultModel();
 		PropertiesTDB props = new PropertiesTDB(tdb, NS);
 
-		Query query = QueryFactory.create(BuildQuery(type, scope, value));
+		Query query = QueryFactory.create(buildQuery("xmlns:"+type, scope, value));
 		QueryExecution qexec = QueryExecutionFactory.create(query,tdb);
 		ResultSet results = qexec.execSelect();
 
@@ -101,6 +103,7 @@ public class Search {
 			matFoto.setTipoMat(trimQuote(sol.get("element").asResource().getProperty(props.tipoMat).asTriple().getMatchObject().toString()));
 			matFoto.setId(Integer.parseInt(trimQuote(sol.get("element").asResource().getProperty(props.id).asTriple().getMatchObject().toString())));
 
+
 			lista.add(matFoto);
 		}
 
@@ -109,12 +112,13 @@ public class Search {
         return lista;
 	}
 
-	public String BuildQuery(String type, String scope, String value) {
+
+	public String buildQuery(String type, String scope, String value) {
 
 		String q =  "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
 				"PREFIX xmlns: <http://www.owl-ontologies.com/maquinas.owl#> " +
 				"select ?element " +
-				"where {?element rdf:type xmlns:" + type + " ";
+				"where {?element rdf:type " + type + " ";
 		if(scope.equals("Id")) {
 			q += ". " +
 					"?element xmlns:Id \"" + value + "\"" +
@@ -138,9 +142,16 @@ public class Search {
 				"FILTER regex(?marca, \"" + value + "\")" +
 				"} ";
 		}
-		else { //all
+		else if(scope.equals("all")) {
 			q +=  "} ";
 		}
+		else {
+			q += ". " +
+					"?element <"+scope+"> ?word . " +
+					"FILTER regex(?word, \"" + value + "\", \"i\")" +
+					"} ";
+		}
+
 		return q;
 	}
 
@@ -191,5 +202,128 @@ public class Search {
 
 	public String trimQuote(String str) {
 		return str.substring(1, str.length()-1);
+	}
+
+	public List<MaterialFoto> parse(String query) {
+
+		String query2 = query.replaceAll("€"," €").replaceAll("  ", " ");
+
+		Dataset dataset = TDBFactory.createDataset(directory);
+		Model tdb = dataset.getDefaultModel();
+		PropertiesTDB props = new PropertiesTDB(tdb, NS);
+
+		String [] parsed = {"all",NS+"Marca","erro"};
+		String [] words = query2.split(" ");
+		for(String word: words) {
+			interpret(word, tdb, props, parsed);
+		}
+
+		for(String i: parsed)
+			System.out.println(i);
+
+		List<MaterialFoto> mats = semanticSearch(tdb, props, parsed);
+
+		System.out.println(mats.size());
+
+		for(MaterialFoto m: mats) {
+			System.out.println(m);
+		}
+
+		return mats;
+	}
+
+	public void interpret(String word, Model tdb, PropertiesTDB props, String [] parsed) {
+		String q =  "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
+				"PREFIX xmlns: <http://www.owl-ontologies.com/maquinas.owl#> " +
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
+				"select ?element " +
+				"where {?element rdfs:label ?word . " +
+				"FILTER (?word=\"" + word + "\") " +
+				" } ";
+
+		System.out.println(q);
+
+		Query query = QueryFactory.create(q);
+		QueryExecution qexec = QueryExecutionFactory.create(query,tdb);
+		ResultSet results = qexec.execSelect();
+
+		if(!results.hasNext()) {
+			System.out.println("2 "+word);
+			parsed[2] = word;
+		}
+
+		while(results.hasNext()) {
+			Resource resource = results.nextSolution().get("element").asResource();
+			if(resource.getClass() == ResourceImpl.class) {
+				System.out.println("0 " + resource);
+				parsed[0] = resource.toString();
+			}
+			else { //property
+				System.out.println("1 " + resource);
+				parsed[1] = resource.toString();
+			}
+		}
+
+	}
+
+	public List<MaterialFoto> semanticSearch(Model tdb, PropertiesTDB props, String [] parsed) {
+
+		Recommend rec = new Recommend();
+		List<MaterialFoto> mats, temp;
+		String p = parsed[1];
+
+		if(p.equals(NS + "Preco")) {
+			parsed[1] = "all";
+		}
+
+		if(parsed[0].equals(NS + "Maquina")) {
+			temp = quickSearch(tdb, props, "xmlns:Aventura", parsed[1], parsed[2]);
+			temp.addAll(quickSearch(tdb, props, "xmlns:Reflex", parsed[1], parsed[2]));
+			temp.addAll(quickSearch(tdb, props, "xmlns:Infatil", parsed[1], parsed[2]));
+		}
+		else {
+			temp = quickSearch(tdb, props,"<"+parsed[0]+">", parsed[1], parsed[2]);
+		}
+
+		if(p.equals(NS + "Preco")) {
+			mats = new ArrayList<MaterialFoto>();
+			for(MaterialFoto mat: temp) {
+				if(rec.priceFit(mat.getPreco(), parsed[2], 1)) {
+					mats.add(mat);
+				}
+			}
+		}
+		else {
+			mats = temp;
+		}
+
+		return mats;
+	}
+
+	public List<MaterialFoto> quickSearch(Model tdb, PropertiesTDB props, String type, String scope, String value) {
+
+		String q =  buildQuery(type, scope, value);
+
+		System.out.println(q);
+		Query query = QueryFactory.create(q);
+		QueryExecution qexec = QueryExecutionFactory.create(query,tdb);
+		ResultSet results = qexec.execSelect();
+
+		List<MaterialFoto> mats = new ArrayList<MaterialFoto>();
+
+		while(results.hasNext()) {
+			MaterialFoto matFoto = new MaterialFoto();
+			QuerySolution sol = results.nextSolution();
+
+			matFoto.setTitulo(trimQuote(sol.get("element").asResource().getProperty(props.titulo).asTriple().getMatchObject().toString()));
+			matFoto.setMarca(trimQuote(sol.get("element").asResource().getProperty(props.marca).asTriple().getMatchObject().toString()));
+			matFoto.setPreco(trimQuote(sol.get("element").asResource().getProperty(props.preco).asTriple().getMatchObject().toString()));
+			matFoto.setTipoMat(trimQuote(sol.get("element").asResource().getProperty(props.tipoMat).asTriple().getMatchObject().toString()));
+			matFoto.setId(Integer.parseInt(trimQuote(sol.get("element").asResource().getProperty(props.id).asTriple().getMatchObject().toString())));
+
+			mats.add(matFoto);
+		}
+
+		return mats;
 	}
 }
