@@ -20,12 +20,12 @@ public class Recommend {
 		double max = 0;
 
 		if(option == 1) { //maq to maq
-			min = Double.parseDouble(preco2.replace(",", ".")) * 0.8;
-			max = Double.parseDouble(preco2.replace(",", ".")) * 1.2;
+			min = Double.parseDouble(preco2.replace(",", ".")) * 0.6;
+			max = Double.parseDouble(preco2.replace(",", ".")) * 1.4;
 		}
 		else if(option == 2) { //maq to bolsa
 			min = Double.parseDouble(preco2.replace(",", ".")) * 0.08;
-			max = Double.parseDouble(preco2.replace(",", ".")) * 0.15;
+			max = Double.parseDouble(preco2.replace(",", ".")) * 0.6;
 		}
 		else if(option == 3) { //maq to obj
 			min = Double.parseDouble(preco2.replace(",", ".")) * 0.3;
@@ -40,8 +40,8 @@ public class Recommend {
 			max = Double.parseDouble(preco2.replace(",", ".")) * 12;
 		}
 		else if(option == 6) { //bolsa to bolsa
-			min = Double.parseDouble(preco2.replace(",", ".")) * 0.8;
-			max = Double.parseDouble(preco2.replace(",", ".")) * 1.2;
+			min = Double.parseDouble(preco2.replace(",", ".")) * 0.5;
+			max = Double.parseDouble(preco2.replace(",", ".")) * 1.5;
 		}
 		else { //obj to obj
 			min = Double.parseDouble(preco2.replace(",", ".")) * 0.8;

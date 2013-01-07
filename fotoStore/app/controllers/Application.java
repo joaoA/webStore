@@ -33,7 +33,6 @@ public class Application extends Controller {
             int i=0;
             for(Bolsa b:bolsas){
                 b.imagem="\\public\\images\\bolsas\\id"+b.id+".jpg";
-                //b.id=i;
                 i++;
             }
 
@@ -47,8 +46,6 @@ public class Application extends Controller {
             int i=0;
             for(MaterialFoto b:bolsas){
                 b.imagem="\\public\\images\\bolsas\\id"+b.id+".jpg";
-                //b.id=i;
-                i++;
             }
 
         }
@@ -186,11 +183,9 @@ public class Application extends Controller {
         ValuePaginator paginator = new ValuePaginator(maqInf);
         paginator.setPageSize(5);
 
-        int i=0;
+
         for(MaquinaInfantil maq : maqInf){
-            maq.imagem="\\public\\images\\infantil\\id"+i+".jpg";
-            maq.id=i;
-            i++;
+            maq.imagem="\\public\\images\\infantil\\id"+maq.id+".jpg";
         }
 		render(paginator);
 	}
@@ -216,23 +211,12 @@ public class Application extends Controller {
         /****************************************/
         List<MaterialFoto> recomendacao = recommend.recommendInfantil(maqInfantil.get(0));
 
-        // TODO:: tirar este PREGO!
-
-        MaquinaInfantil gandaPrego= new MaquinaInfantil();
-        gandaPrego.id=0;
-        gandaPrego.titulo="nada";
-        gandaPrego.preco="zero";
-        while(recomendacao.size()<4)
-            recomendacao.add(gandaPrego);
-
         recomendacao= recomendacao.subList(0,4);
 
         for (MaterialFoto mat : recomendacao){
             mat.imagem = "\\public\\images\\infantil\\id"+mat.id+".jpg";
             System.out.println(mat.titulo +"  "+mat.preco);
         }
-
-        //TODO: melhorar recomendacao
 
         render(maqInfantil,titulo,preco,imagem,recomendacao);
     }
@@ -290,23 +274,16 @@ public class Application extends Controller {
         /****************************************/
         List<MaterialFoto> recomendacao = recommend.recommendAventura(maqAventura.get(0));
 
-        // TODO:: tirar este PREGO!
-
-        MaquinaAventura gandaPrego= new MaquinaAventura();
-        gandaPrego.id=0;
-        gandaPrego.titulo="nada";
-        gandaPrego.preco="zero";
-        while(recomendacao.size()<4)
-            recomendacao.add(gandaPrego);
-
-        recomendacao= recomendacao.subList(0,4);
+        MaterialFoto bolsa = recomendacao.get(recomendacao.size()-1);
+        recomendacao= recomendacao.subList(0,3);
+        recomendacao.add(bolsa);
 
         for (MaterialFoto mat : recomendacao){
             mat.imagem = "\\public\\images\\aventura\\id"+mat.id+".jpg";
             System.out.println(mat.titulo +"  "+mat.preco);
         }
 
-        //TODO: melhorar recomendacao -> a 1º maquina nao recomenda nada
+        recomendacao.get(3).imagem =  "\\public\\images\\bolsas\\id"+recomendacao.get(3).id+".jpg";
 
         render(maqAventura,titulo,preco,imagem,recomendacao);
     }
@@ -360,25 +337,51 @@ public class Application extends Controller {
         /****************************************/
          /*            Recomendacao            */
         /****************************************/
+        ArrayList<String> marcaAux =new ArrayList<String>();
+        marcaAux.add("Case logic");
+        marcaAux.add("Cullmann");
+        marcaAux.add("Delsey");
+        marcaAux.add("Lowepro");
+        marcaAux.add("Tnb");
+        marcaAux.add("Vanguard");
+
         List<MaterialFoto> recomendacao = recommend.recommendReflex(maqReflex.get(0));
 
-        // TODO:: tirar este PREGO!
 
-        MaquinaReflex gandaPrego= new MaquinaReflex();
-        gandaPrego.id=0;
-        gandaPrego.titulo="nada";
-        gandaPrego.preco="zero";
-        while(recomendacao.size()<4)
-            recomendacao.add(gandaPrego);
+        MaterialFoto objectiva = recomendacao.get(recomendacao.size()-1);
+        MaterialFoto bolsa= new MaterialFoto();
+        boolean added=false;
 
-        recomendacao= recomendacao.subList(0,4);
+        for (MaterialFoto mat : recomendacao){
+            if(marcaAux.contains(mat.marca)){
+                bolsa=mat;
+                added=true;
+            }
+        }
+
+
+        if(!added){
+            bolsa.id=0;
+            bolsa.titulo="Case Logic Mochila Sling TBC-410K";
+            bolsa.preco="42,99";
+
+        }
+        recomendacao= recomendacao.subList(0,2);
+
+
+
+
+
+        recomendacao.add(objectiva);
+        recomendacao.add(bolsa);
 
         for (MaterialFoto mat : recomendacao){
             mat.imagem = "\\public\\images\\reflex\\id"+mat.id+".jpg";
             System.out.println(mat.titulo +"  "+mat.preco);
         }
 
-        //TODO: melhorar recomendacao
+        recomendacao.get(2).imagem =  "\\public\\images\\objetivas\\id"+recomendacao.get(2).id+".jpg";
+        recomendacao.get(3).imagem =  "\\public\\images\\bolsas\\id"+recomendacao.get(3).id+".jpg";
 
         render(maqReflex,titulo,preco,imagem,recomendacao);
     }
