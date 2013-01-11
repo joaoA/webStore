@@ -24,8 +24,8 @@ public class Recommend {
 			max = Double.parseDouble(preco2.replace(",", ".")) * 1.2;
 		}
 		else if(option == 2) { //maq to bolsa
-			min = Double.parseDouble(preco2.replace(",", ".")) * 0.08;
-			max = Double.parseDouble(preco2.replace(",", ".")) * 0.15;
+			min = Double.parseDouble(preco2.replace(",", ".")) * 0.1;
+			max = Double.parseDouble(preco2.replace(",", ".")) * 0.5;
 		}
 		else if(option == 3) { //maq to obj
 			min = Double.parseDouble(preco2.replace(",", ".")) * 0.3;

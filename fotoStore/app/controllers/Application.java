@@ -419,7 +419,7 @@ public class Application extends Controller {
     	List<MaterialFoto> results = Application.search.parse(search);
 
         ValuePaginator paginator = new ValuePaginator(results);
-        paginator.setPageSize(results.size());
+        paginator.setPageSize(5);
 
 
         for(MaterialFoto mat : results){

@@ -55,5 +55,10 @@ public class MaterialFoto extends Model {
 				+ tipoMat + ", id=" + id + "]";
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		MaterialFoto mat = (MaterialFoto)obj;
+		return this.id == mat.id && this.tipoMat.equals(mat.tipoMat);
+	}
 
 }

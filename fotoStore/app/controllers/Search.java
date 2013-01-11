@@ -2,7 +2,11 @@ package controllers;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import org.openjena.atlas.lib.AlarmClock;
 
 import models.Bolsa;
 import models.Maquina;
@@ -117,7 +121,8 @@ public class Search {
 
 		String q =  "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
 				"PREFIX xmlns: <http://www.owl-ontologies.com/maquinas.owl#> " +
-				"select ?element " +
+				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
+				"select distinct ?element " +
 				"where {?element rdf:type " + type + " ";
 		if(scope.equals("Id")) {
 			q += ". " +
@@ -144,6 +149,12 @@ public class Search {
 		}
 		else if(scope.equals("all")) {
 			q +=  "} ";
+		}
+		else if(scope.equals("all2")) {
+			q += ". " +
+				"?element ?property ?word . " +
+				"FILTER regex(?word, \"" + value + "\", \"i\")" +
+				"} ";
 		}
 		else {
 			q += ". " +
@@ -212,16 +223,15 @@ public class Search {
 		Model tdb = dataset.getDefaultModel();
 		PropertiesTDB props = new PropertiesTDB(tdb, NS);
 
-		String [] parsed = {"all",NS+"Marca","erro"};
+		String type = "all";
+		List<String> scopes = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
 		String [] words = query2.split(" ");
 		for(String word: words) {
-			interpret(word, tdb, props, parsed);
+			type = interpret(word, tdb, type, scopes, values);
 		}
 
-		for(String i: parsed)
-			System.out.println(i);
-
-		List<MaterialFoto> mats = semanticSearch(tdb, props, parsed);
+		List<MaterialFoto> mats = semanticSearch(tdb, props, type, scopes, values);
 
 		System.out.println(mats.size());
 
@@ -232,13 +242,13 @@ public class Search {
 		return mats;
 	}
 
-	public void interpret(String word, Model tdb, PropertiesTDB props, String [] parsed) {
+	public String interpret(String word, Model tdb, String type, List<String> scopes, List<String> values) {
 		String q =  "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
 				"PREFIX xmlns: <http://www.owl-ontologies.com/maquinas.owl#> " +
 				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
 				"select ?element " +
 				"where {?element rdfs:label ?word . " +
-				"FILTER (?word=\"" + word + "\") " +
+				"FILTER regex(?word, \"" + word + "\", \"i\")" +
 				" } ";
 
 		System.out.println(q);
@@ -249,64 +259,89 @@ public class Search {
 
 		if(!results.hasNext()) {
 			System.out.println("2 "+word);
-			parsed[2] = word;
+			values.add(word);
 		}
 
 		while(results.hasNext()) {
 			Resource resource = results.nextSolution().get("element").asResource();
 			if(resource.getClass() == ResourceImpl.class) {
 				System.out.println("0 " + resource);
-				parsed[0] = resource.toString();
+				type = orderType(type, resource.toString());
 			}
 			else { //property
 				System.out.println("1 " + resource);
-				parsed[1] = resource.toString();
+				scopes.add(resource.toString());
 			}
 		}
 
+		return type;
 	}
 
-	public List<MaterialFoto> semanticSearch(Model tdb, PropertiesTDB props, String [] parsed) {
+	public List<MaterialFoto> semanticSearch(Model tdb, PropertiesTDB props, String type, List<String> scopes, List<String> values) {
 
 		Recommend rec = new Recommend();
 		List<MaterialFoto> mats, temp;
-		String p = parsed[1];
+		Set<MaterialFoto> set, total;
 
-		if(parsed[2].equals("erro")) {
-			parsed[1] = "all";
+		if(type.equals("all")) {
+			temp = semanticSearch(tdb,props,NS+"Aventura",scopes,values);
+			temp.addAll(semanticSearch(tdb,props,NS+"Reflex",scopes,values));
+			temp.addAll(semanticSearch(tdb,props,NS+"Infatil",scopes,values));
+			temp.addAll(semanticSearch(tdb,props,NS+"Objetiva",scopes,values));
+			temp.addAll(semanticSearch(tdb,props,NS+"Bolsas",scopes,values));
+			return temp;
 		}
-
-		if(p.equals(NS + "Preco")) {
-			parsed[1] = "all";
-		}
-
-		if(parsed[0].equals("all")) {
-			temp = quickSearch(tdb, props, "xmlns:Aventura", parsed[1], parsed[2]);
-			temp.addAll(quickSearch(tdb, props, "xmlns:Reflex", parsed[1], parsed[2]));
-			temp.addAll(quickSearch(tdb, props, "xmlns:Infatil", parsed[1], parsed[2]));
-			temp.addAll(quickSearch(tdb, props, "xmlns:Bolsas", parsed[1], parsed[2]));
-			temp.addAll(quickSearch(tdb, props, "xmlns:Objetiva", parsed[1], parsed[2]));
-		}
-		else if(parsed[0].equals(NS + "Maquina")) {
-			temp = quickSearch(tdb, props, "xmlns:Aventura", parsed[1], parsed[2]);
-			temp.addAll(quickSearch(tdb, props, "xmlns:Reflex", parsed[1], parsed[2]));
-			temp.addAll(quickSearch(tdb, props, "xmlns:Infatil", parsed[1], parsed[2]));
-		}
-		else {
-			temp = quickSearch(tdb, props,"<"+parsed[0]+">", parsed[1], parsed[2]);
+		else if(type.equals(NS + "Maquina")) {
+			temp = semanticSearch(tdb,props,NS+"Aventura",scopes,values);
+			temp.addAll(semanticSearch(tdb,props,NS+"Reflex",scopes,values));
+			temp.addAll(semanticSearch(tdb,props,NS+"Infatil",scopes,values));
+			return temp;
 		}
 
-		if(p.equals(NS + "Preco")) {
-			mats = new ArrayList<MaterialFoto>();
-			for(MaterialFoto mat: temp) {
-				if(rec.priceFit(mat.getPreco(), parsed[2], 1)) {
-					mats.add(mat);
+		type = "<"+type+">";
+
+		if(values.isEmpty()) {
+			return quickSearch(tdb, props, type, "all", "0");
+		}
+
+		total = new HashSet<MaterialFoto>();
+		for(String value: values) {
+
+			set = new HashSet<MaterialFoto>();
+			if(scopes.isEmpty()) {
+				set.addAll(quickSearch(tdb, props, type, "all2", value));
+			}
+
+			for(String scope: scopes) {
+				if(scope.equals(NS + "Preco")) {
+					try {
+						Double.parseDouble(value);
+					} catch (NumberFormatException e) {
+						break;
+					}
+					temp = quickSearch(tdb, props, type, "all", "0");
+					for(MaterialFoto mat: temp) {
+						if(rec.priceFit(mat.getPreco(), value, 1)) {
+							set.add(mat);
+						}
+					}
+
+				}
+				else {
+					set.addAll(quickSearch(tdb, props, type, scope, value));
 				}
 			}
+
+			if(total.isEmpty()) {
+				total.addAll(set);
+			}
+			else {
+				total.retainAll(set);
+			}
 		}
-		else {
-			mats = temp;
-		}
+
+		mats = new ArrayList<MaterialFoto>();
+		mats.addAll(total);
 
 		return mats;
 	}
@@ -335,6 +370,17 @@ public class Search {
 			mats.add(matFoto);
 		}
 
+		System.out.println(mats.size());
+
 		return mats;
+	}
+
+	public String orderType(String bef, String aft) {
+		if(aft.equals(NS + "Maquina") && (bef.equals(NS + "Aventura") || bef.equals(NS + "Reflex") || bef.equals(NS + "Infatil"))) {
+			return bef;
+		}
+		else {
+			return aft;
+		}
 	}
 }
